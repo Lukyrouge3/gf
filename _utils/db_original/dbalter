@@ -1,0 +1,101 @@
+#!/usr/bin/perl
+
+$db_name = "ElfDB";
+$db_account = "postgres";
+$host = "";
+$BAKDATE = "";
+system ($BAKDATE=`date +%y%m%d%H%M.gz`);
+
+$argc = $#ARGV + 1;
+if ($argc > 0) {
+	$target = $ARGV[0];
+	if ($target eq "--help") {
+		Help ();
+	}
+	if ($target =~ /:/) {
+		$pos = index ($target, ":");
+		$db_name = substr $target, $pos + 1;
+		$target = substr $target, 0, $pos;
+	}
+	if ($target ne "") {
+		if ($target !~ /\d+\.\d+\.\d+\.\d+/) {
+			print "\n\x1b[0;31mtarget ip invalid!\x1b[0m\n";
+			Help ();
+		}
+		$host = "-h " . $target;
+	}
+}
+
+print "\n";
+print "backup db ElfDB_$BAKDATE\n";
+system ("pg_dump -U $db_account $db_name $host|gzip -c > ElfDB_$BAKDATE"); 
+
+$cur_v = 0;
+system ("echo \"select schema_version from configuration;\" | psql -U $db_account $db_name $host > vers");
+open (SQL , "< vers");
+$i = 0;
+foreach (<SQL>) {
+	chomp ($_);
+	if ($i == 2) {
+		$cur_v = $_;
+	}
+	$i++;
+}
+$max_v = "0";
+$patch = 0;
+open (FHD1, "< sk_schema_alter");
+foreach (<FHD1>) {
+	chomp ($_);	
+	@line = split (/ /, $_);	
+	($vers_tag, $version) = @line;
+	if ($vers_tag eq 'version') {
+		if ($max_v < $version) {
+			$max_v = $version;
+		}		
+		if ($cur_v < $version) {
+			$patch = 1;
+			print "\x1b[0;36mversion $version : \x1b[1;37mpatching ...";
+			next;
+		}				
+		else {
+			print "\x1b[0;36mversion $version : \x1b[1;37malready exist ... \x1b[1;33mskip\n";
+			$patch = 0;
+		}
+	}
+
+	if ($patch) {
+		if ($vers_tag eq 'doexec') {
+			`./$version $db_name $db_account`;
+		}
+		else {
+			Patch ($_);
+		}
+		system ("echo \"update configuration set schema_version = $max_v\" | psql -U $db_account $db_name $host");
+		print "\x1b[1;33mdone\n";
+	}
+}
+
+print "vacuum full\n";
+system ("echo \"vacuum full\" | psql -U $db_account $db_name $host");
+print "vacuum analyze\n";
+system ("echo \"vacuum analyze\" | psql -U $db_account $db_name $host");
+
+print "\x1b[0m\n";
+
+sub Patch 
+{
+	system ("echo \"$_\" | psql -U $db_account $db_name $host");
+}
+
+sub Help
+{
+	print "\n\x1b[1;33mUSAGE\n";
+	print "\x1b[1;37mdbalter \x1b[1;31m[target_ip][:db_name]\n";
+	print "\n\x1b[1;33mEXAMPLE\n";
+	print "\x1b[0;36mdbalter                      \x1b[1;34m-> alter localhost ElfDB db\n";
+	print "\x1b[0;36mdbalter \x1b[1;36m:QAElfDB             \x1b[1;34m-> alter localhost QAElfDB db\n";
+	print "\x1b[0;36mdbalter \x1b[1;36m192.168.1.55         \x1b[1;34m-> alter 192.168.1.55 ElfDB db\n";
+	print "\x1b[0;36mdbalter \x1b[1;36m192.168.1.55:QAElfDB \x1b[1;34m-> alter 192.168.1.55 QAElfDB db\n";
+	print "\x1b[0m\n";
+	exit 0;
+}

@@ -1,0 +1,2618 @@
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+--
+-- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: spiritking
+--
+
+CREATE PROCEDURAL LANGUAGE plpgsql;
+
+
+ALTER PROCEDURAL LANGUAGE plpgsql OWNER TO spiritking;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: advanced_ability; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE advanced_ability (
+    player_id integer NOT NULL,
+    effect_id integer NOT NULL,
+    point integer DEFAULT 0
+);
+
+
+ALTER TABLE public.advanced_ability OWNER TO postgres;
+
+--
+-- Name: auction; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auction (
+    id integer NOT NULL,
+    item_id integer NOT NULL,
+    durability integer NOT NULL,
+    maker character varying(32) DEFAULT ''::character varying,
+    rank integer DEFAULT 0,
+    identify smallint DEFAULT 1,
+    magic smallint DEFAULT 0,
+    embedded_amount integer DEFAULT 0,
+    embedded_id1 integer DEFAULT (-1),
+    embedded_id2 integer DEFAULT (-1),
+    embedded_id3 integer DEFAULT (-1),
+    embedded_id4 integer DEFAULT (-1),
+    embedded_id5 integer DEFAULT (-1),
+    embedded_id6 integer DEFAULT (-1),
+    create_time integer DEFAULT 1,
+    due_date integer DEFAULT 0,
+    container_index integer DEFAULT (-1),
+    combo_id integer DEFAULT 0,
+    strengthen integer DEFAULT 0,
+    cur_maxdurability integer DEFAULT 0,
+    bind integer DEFAULT 0,
+    seller_id integer DEFAULT 0,
+    item_type integer DEFAULT 0,
+    level integer DEFAULT 0,
+    class integer DEFAULT 0,
+    quality integer DEFAULT 0,
+    quality_filter integer DEFAULT 0,
+    auction_duedate integer DEFAULT 0,
+    auction_price integer DEFAULT 0
+);
+
+
+ALTER TABLE public.auction OWNER TO postgres;
+
+--
+-- Name: auction_view_by_duedate_dn; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW auction_view_by_duedate_dn AS
+    SELECT auction.id, auction.item_id, auction.durability, auction.maker, auction.rank, auction.identify, auction.magic, auction.embedded_amount, auction.embedded_id1, auction.embedded_id2, auction.embedded_id3, auction.embedded_id4, auction.embedded_id5, auction.embedded_id6, auction.create_time, auction.due_date, auction.container_index, auction.combo_id, auction.strengthen, auction.cur_maxdurability, auction.bind, auction.seller_id, auction.item_type, auction.level, auction.class, auction.quality, auction.quality_filter, auction.auction_duedate, auction.auction_price FROM auction ORDER BY auction.auction_duedate DESC;
+
+
+ALTER TABLE public.auction_view_by_duedate_dn OWNER TO postgres;
+
+--
+-- Name: auction_view_by_duedate_up; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW auction_view_by_duedate_up AS
+    SELECT auction.id, auction.item_id, auction.durability, auction.maker, auction.rank, auction.identify, auction.magic, auction.embedded_amount, auction.embedded_id1, auction.embedded_id2, auction.embedded_id3, auction.embedded_id4, auction.embedded_id5, auction.embedded_id6, auction.create_time, auction.due_date, auction.container_index, auction.combo_id, auction.strengthen, auction.cur_maxdurability, auction.bind, auction.seller_id, auction.item_type, auction.level, auction.class, auction.quality, auction.quality_filter, auction.auction_duedate, auction.auction_price FROM auction ORDER BY auction.auction_duedate;
+
+
+ALTER TABLE public.auction_view_by_duedate_up OWNER TO postgres;
+
+--
+-- Name: auction_view_by_level_dn; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW auction_view_by_level_dn AS
+    SELECT auction.id, auction.item_id, auction.durability, auction.maker, auction.rank, auction.identify, auction.magic, auction.embedded_amount, auction.embedded_id1, auction.embedded_id2, auction.embedded_id3, auction.embedded_id4, auction.embedded_id5, auction.embedded_id6, auction.create_time, auction.due_date, auction.container_index, auction.combo_id, auction.strengthen, auction.cur_maxdurability, auction.bind, auction.seller_id, auction.item_type, auction.level, auction.class, auction.quality, auction.quality_filter, auction.auction_duedate, auction.auction_price FROM auction ORDER BY auction.level DESC;
+
+
+ALTER TABLE public.auction_view_by_level_dn OWNER TO postgres;
+
+--
+-- Name: auction_view_by_level_up; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW auction_view_by_level_up AS
+    SELECT auction.id, auction.item_id, auction.durability, auction.maker, auction.rank, auction.identify, auction.magic, auction.embedded_amount, auction.embedded_id1, auction.embedded_id2, auction.embedded_id3, auction.embedded_id4, auction.embedded_id5, auction.embedded_id6, auction.create_time, auction.due_date, auction.container_index, auction.combo_id, auction.strengthen, auction.cur_maxdurability, auction.bind, auction.seller_id, auction.item_type, auction.level, auction.class, auction.quality, auction.quality_filter, auction.auction_duedate, auction.auction_price FROM auction ORDER BY auction.level;
+
+
+ALTER TABLE public.auction_view_by_level_up OWNER TO postgres;
+
+--
+-- Name: auction_view_by_price_dn; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW auction_view_by_price_dn AS
+    SELECT auction.id, auction.item_id, auction.durability, auction.maker, auction.rank, auction.identify, auction.magic, auction.embedded_amount, auction.embedded_id1, auction.embedded_id2, auction.embedded_id3, auction.embedded_id4, auction.embedded_id5, auction.embedded_id6, auction.create_time, auction.due_date, auction.container_index, auction.combo_id, auction.strengthen, auction.cur_maxdurability, auction.bind, auction.seller_id, auction.item_type, auction.level, auction.class, auction.quality, auction.quality_filter, auction.auction_duedate, auction.auction_price FROM auction ORDER BY auction.auction_price DESC;
+
+
+ALTER TABLE public.auction_view_by_price_dn OWNER TO postgres;
+
+--
+-- Name: auction_view_by_price_up; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW auction_view_by_price_up AS
+    SELECT auction.id, auction.item_id, auction.durability, auction.maker, auction.rank, auction.identify, auction.magic, auction.embedded_amount, auction.embedded_id1, auction.embedded_id2, auction.embedded_id3, auction.embedded_id4, auction.embedded_id5, auction.embedded_id6, auction.create_time, auction.due_date, auction.container_index, auction.combo_id, auction.strengthen, auction.cur_maxdurability, auction.bind, auction.seller_id, auction.item_type, auction.level, auction.class, auction.quality, auction.quality_filter, auction.auction_duedate, auction.auction_price FROM auction ORDER BY auction.auction_price;
+
+
+ALTER TABLE public.auction_view_by_price_up OWNER TO postgres;
+
+--
+-- Name: auction_view_by_quality_dn; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW auction_view_by_quality_dn AS
+    SELECT auction.id, auction.item_id, auction.durability, auction.maker, auction.rank, auction.identify, auction.magic, auction.embedded_amount, auction.embedded_id1, auction.embedded_id2, auction.embedded_id3, auction.embedded_id4, auction.embedded_id5, auction.embedded_id6, auction.create_time, auction.due_date, auction.container_index, auction.combo_id, auction.strengthen, auction.cur_maxdurability, auction.bind, auction.seller_id, auction.item_type, auction.level, auction.class, auction.quality, auction.quality_filter, auction.auction_duedate, auction.auction_price FROM auction ORDER BY auction.quality DESC;
+
+
+ALTER TABLE public.auction_view_by_quality_dn OWNER TO postgres;
+
+--
+-- Name: auction_view_by_quality_up; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW auction_view_by_quality_up AS
+    SELECT auction.id, auction.item_id, auction.durability, auction.maker, auction.rank, auction.identify, auction.magic, auction.embedded_amount, auction.embedded_id1, auction.embedded_id2, auction.embedded_id3, auction.embedded_id4, auction.embedded_id5, auction.embedded_id6, auction.create_time, auction.due_date, auction.container_index, auction.combo_id, auction.strengthen, auction.cur_maxdurability, auction.bind, auction.seller_id, auction.item_type, auction.level, auction.class, auction.quality, auction.quality_filter, auction.auction_duedate, auction.auction_price FROM auction ORDER BY auction.quality;
+
+
+ALTER TABLE public.auction_view_by_quality_up OWNER TO postgres;
+
+--
+-- Name: bags; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE bags (
+    id integer NOT NULL,
+    item_id integer NOT NULL,
+    durability integer NOT NULL,
+    maker character varying(32) DEFAULT ''::character varying,
+    rank integer DEFAULT 0,
+    identify smallint DEFAULT 1,
+    magic smallint DEFAULT 0,
+    embedded_amount integer DEFAULT 0,
+    embedded_id1 integer DEFAULT (-1),
+    embedded_id2 integer DEFAULT (-1),
+    embedded_id3 integer DEFAULT (-1),
+    embedded_id4 integer DEFAULT (-1),
+    embedded_id5 integer DEFAULT (-1),
+    embedded_id6 integer DEFAULT (-1),
+    create_time integer DEFAULT 1,
+    due_date integer DEFAULT 0,
+    container_index integer DEFAULT (-1),
+    combo_id integer DEFAULT 0,
+    strengthen integer DEFAULT 0,
+    cur_maxdurability integer DEFAULT 0,
+    bind integer DEFAULT 0,
+    player_id integer NOT NULL,
+    loc integer NOT NULL
+);
+
+
+ALTER TABLE public.bags OWNER TO postgres;
+
+--
+-- Name: battlefield_career; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE battlefield_career (
+    player_id integer NOT NULL,
+    join_count integer NOT NULL,
+    win_count integer NOT NULL,
+    lose_count integer NOT NULL,
+    mvp_count integer NOT NULL,
+    hight_score integer NOT NULL,
+    kill_count integer NOT NULL,
+    die_count integer NOT NULL,
+    hight_kill integer NOT NULL,
+    hight_die integer NOT NULL,
+    hight_damage integer NOT NULL,
+    hight_altar_damage integer NOT NULL,
+    hight_cure integer NOT NULL
+);
+
+
+ALTER TABLE public.battlefield_career OWNER TO postgres;
+
+--
+-- Name: battlefield_month; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE battlefield_month (
+    player_id integer NOT NULL,
+    join_count integer NOT NULL,
+    win_count integer NOT NULL,
+    lose_count integer NOT NULL,
+    mvp_count integer NOT NULL,
+    hight_score integer NOT NULL,
+    kill_count integer NOT NULL,
+    die_count integer NOT NULL,
+    hight_kill integer NOT NULL,
+    hight_die integer NOT NULL,
+    hight_damage integer NOT NULL,
+    hight_altar_damage integer NOT NULL,
+    hight_cure integer NOT NULL
+);
+
+
+ALTER TABLE public.battlefield_month OWNER TO postgres;
+
+--
+-- Name: bulletin; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE bulletin (
+    player_name character varying(32) NOT NULL,
+    level integer,
+    class character varying(32),
+    family_name character varying(32),
+    rank integer,
+    CONSTRAINT bulletin_level CHECK (((level >= 1) AND (level <= 200)))
+);
+
+
+ALTER TABLE public.bulletin OWNER TO postgres;
+
+--
+-- Name: collection; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE collection (
+    id integer NOT NULL,
+    item_id integer NOT NULL,
+    durability integer NOT NULL,
+    maker character varying(32) DEFAULT ''::character varying,
+    rank integer DEFAULT 0,
+    identify smallint DEFAULT 1,
+    magic smallint DEFAULT 0,
+    embedded_amount integer DEFAULT 0,
+    embedded_id1 integer DEFAULT (-1),
+    embedded_id2 integer DEFAULT (-1),
+    embedded_id3 integer DEFAULT (-1),
+    embedded_id4 integer DEFAULT (-1),
+    embedded_id5 integer DEFAULT (-1),
+    embedded_id6 integer DEFAULT (-1),
+    create_time integer DEFAULT 1,
+    due_date integer DEFAULT 0,
+    combo_id integer DEFAULT 0,
+    strengthen integer DEFAULT 0,
+    cur_maxdurability integer DEFAULT 0,
+    bind integer DEFAULT 0,
+    account_id integer NOT NULL
+);
+
+
+ALTER TABLE public.collection OWNER TO postgres;
+
+--
+-- Name: configuration; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE configuration (
+    schema_version integer NOT NULL,
+    world_start_time character varying(32) NOT NULL,
+    mission_version integer DEFAULT 0
+);
+
+
+ALTER TABLE public.configuration OWNER TO postgres;
+
+--
+-- Name: elf; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE elf (
+    elf_id integer NOT NULL,
+    player_id integer NOT NULL,
+    template_id integer NOT NULL,
+    name character varying(20) DEFAULT ''::character varying,
+    level integer DEFAULT 1,
+    exp integer DEFAULT 0,
+    familiar integer DEFAULT 0,
+    mood integer DEFAULT 0,
+    energy integer DEFAULT 0,
+    stone_a integer DEFAULT 0,
+    stone_b integer DEFAULT 0,
+    skill_id_1 integer DEFAULT 0,
+    skill_level_1 integer DEFAULT 0,
+    skill_exp_1 integer DEFAULT 0,
+    skill_id_2 integer DEFAULT 0,
+    skill_level_2 integer DEFAULT 0,
+    skill_exp_2 integer DEFAULT 0,
+    skill_id_3 integer DEFAULT 0,
+    skill_level_3 integer DEFAULT 0,
+    skill_exp_3 integer DEFAULT 0,
+    skill_id_4 integer DEFAULT 0,
+    skill_level_4 integer DEFAULT 0,
+    skill_exp_4 integer DEFAULT 0,
+    loc smallint NOT NULL,
+    item1 integer DEFAULT 0,
+    amount1 integer DEFAULT 0,
+    socket_amount1 integer DEFAULT 0,
+    item2 integer DEFAULT 0,
+    amount2 integer DEFAULT 0,
+    socket_amount2 integer DEFAULT 0,
+    item3 integer DEFAULT 0,
+    amount3 integer DEFAULT 0,
+    socket_amount3 integer DEFAULT 0,
+    work_type integer DEFAULT 0,
+    work_id integer DEFAULT 0,
+    work_event integer DEFAULT 0,
+    work_count integer DEFAULT 1,
+    face integer DEFAULT 0,
+    type integer DEFAULT 0,
+    skin integer DEFAULT 0,
+    return_loc integer DEFAULT 0,
+    return_grade integer DEFAULT 0,
+    wall integer DEFAULT 0,
+    ground integer DEFAULT 0
+);
+
+
+ALTER TABLE public.elf OWNER TO postgres;
+
+--
+-- Name: elf_container; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE elf_container (
+    id integer NOT NULL,
+    item_id integer NOT NULL,
+    durability integer NOT NULL,
+    maker character varying(32) DEFAULT ''::character varying,
+    rank integer DEFAULT 0,
+    identify smallint DEFAULT 1,
+    magic smallint DEFAULT 0,
+    embedded_amount integer DEFAULT 0,
+    embedded_id1 integer DEFAULT (-1),
+    embedded_id2 integer DEFAULT (-1),
+    embedded_id3 integer DEFAULT (-1),
+    embedded_id4 integer DEFAULT (-1),
+    embedded_id5 integer DEFAULT (-1),
+    embedded_id6 integer DEFAULT (-1),
+    create_time integer DEFAULT 1,
+    due_date integer DEFAULT 0,
+    container_index integer DEFAULT (-1),
+    combo_id integer DEFAULT 0,
+    strengthen integer DEFAULT 0,
+    cur_maxdurability integer DEFAULT 0,
+    bind integer DEFAULT 0,
+    elf_id integer NOT NULL,
+    player_id integer NOT NULL,
+    loc integer NOT NULL
+);
+
+
+ALTER TABLE public.elf_container OWNER TO postgres;
+
+--
+-- Name: equipment; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE equipment (
+    id integer NOT NULL,
+    item_id integer NOT NULL,
+    durability integer NOT NULL,
+    maker character varying(32) DEFAULT ''::character varying,
+    rank integer DEFAULT 0,
+    identify smallint DEFAULT 1,
+    magic smallint DEFAULT 0,
+    embedded_amount integer DEFAULT 0,
+    embedded_id1 integer DEFAULT (-1),
+    embedded_id2 integer DEFAULT (-1),
+    embedded_id3 integer DEFAULT (-1),
+    embedded_id4 integer DEFAULT (-1),
+    embedded_id5 integer DEFAULT (-1),
+    embedded_id6 integer DEFAULT (-1),
+    create_time integer DEFAULT 1,
+    due_date integer DEFAULT 0,
+    container_index integer DEFAULT (-1),
+    combo_id integer DEFAULT 0,
+    strengthen integer DEFAULT 0,
+    cur_maxdurability integer DEFAULT 0,
+    bind integer DEFAULT 0,
+    player_id integer NOT NULL,
+    loc integer NOT NULL
+);
+
+
+ALTER TABLE public.equipment OWNER TO postgres;
+
+--
+-- Name: family; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE family (
+    id integer NOT NULL,
+    name character varying(32),
+    leader_id integer,
+    lv smallint DEFAULT 1 NOT NULL,
+    uniform integer DEFAULT (-1) NOT NULL,
+    flag integer DEFAULT (-1) NOT NULL,
+    delete_time integer DEFAULT 0 NOT NULL,
+    recruit_message character varying(256) DEFAULT ''::character varying NOT NULL,
+    emblem integer DEFAULT (-1) NOT NULL,
+    info character varying(256) DEFAULT ''::character varying NOT NULL,
+    member_title character varying(32) DEFAULT ''::character varying NOT NULL,
+    leader_title character varying(32) DEFAULT ''::character varying NOT NULL,
+    cadre_title_2 character varying(32) DEFAULT ''::character varying NOT NULL,
+    cadre_title_3 character varying(32) DEFAULT ''::character varying NOT NULL,
+    cadre_title_4 character varying(32) DEFAULT ''::character varying NOT NULL,
+    cadre_title_5 character varying(32) DEFAULT ''::character varying NOT NULL,
+    cadre_title_6 character varying(32) DEFAULT ''::character varying NOT NULL,
+    cadre_title_7 character varying(32) DEFAULT ''::character varying NOT NULL,
+    cadre_title_8 character varying(32) DEFAULT ''::character varying NOT NULL,
+    exploit integer DEFAULT 0,
+    exp integer DEFAULT 0,
+    invite_privilege smallint DEFAULT 1 NOT NULL,
+    kickout_privilege smallint DEFAULT 1 NOT NULL,
+    setcadre_privilege smallint DEFAULT 1 NOT NULL,
+    editinfo_privilege smallint DEFAULT 1 NOT NULL,
+    setemblem smallint DEFAULT 1 NOT NULL,
+    msgboard_privilege smallint DEFAULT 1 NOT NULL,
+    channel_privilege smallint DEFAULT 143 NOT NULL,
+    be_create_time integer DEFAULT 0 NOT NULL,
+    comment_privilege integer DEFAULT 1,
+    treasury integer DEFAULT 0,
+    tax_rate integer DEFAULT 0,
+    family_skill_point integer DEFAULT 0
+);
+
+
+ALTER TABLE public.family OWNER TO postgres;
+
+--
+-- Name: family_achievement; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE family_achievement (
+    family_id integer NOT NULL,
+    achievement_type integer NOT NULL,
+    point integer NOT NULL
+);
+
+
+ALTER TABLE public.family_achievement OWNER TO postgres;
+
+--
+-- Name: family_achievement_log; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE family_achievement_log (
+    family_id integer NOT NULL,
+    player_id integer NOT NULL,
+    achievement_id integer NOT NULL,
+    point integer NOT NULL,
+    date integer NOT NULL
+);
+
+
+ALTER TABLE public.family_achievement_log OWNER TO postgres;
+
+--
+-- Name: family_cadre_members; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE family_cadre_members (
+    family_id integer NOT NULL,
+    player_id integer NOT NULL,
+    rank smallint NOT NULL,
+    title character varying(32)
+);
+
+
+ALTER TABLE public.family_cadre_members OWNER TO postgres;
+
+--
+-- Name: family_msgboard; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE family_msgboard (
+    family_id integer NOT NULL,
+    message_id integer NOT NULL,
+    title character varying NOT NULL,
+    content character varying NOT NULL,
+    player_name character varying(20) NOT NULL,
+    create_date integer NOT NULL
+);
+
+
+ALTER TABLE public.family_msgboard OWNER TO postgres;
+
+--
+-- Name: final_mission_state_v2; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE final_mission_state_v2 (
+    player_id integer NOT NULL,
+    index integer NOT NULL,
+    state integer
+);
+
+
+ALTER TABLE public.final_mission_state_v2 OWNER TO postgres;
+
+--
+-- Name: friends; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE friends (
+    player_id integer NOT NULL,
+    friend_id integer NOT NULL,
+    friend_type integer
+);
+
+
+ALTER TABLE public.friends OWNER TO postgres;
+
+--
+-- Name: greeting_dialogues; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE greeting_dialogues (
+    id integer NOT NULL,
+    dialogue character varying,
+    english character varying DEFAULT ''::character varying,
+    thai character varying DEFAULT ''::character varying,
+    china_gb character varying DEFAULT ''::character varying,
+    note text
+);
+
+
+ALTER TABLE public.greeting_dialogues OWNER TO postgres;
+
+--
+-- Name: hbo_version; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE hbo_version (
+    version_string character varying(32) NOT NULL,
+    serverbinary_timestamp character varying(32),
+    schema_timestamp character varying(32)
+);
+
+
+ALTER TABLE public.hbo_version OWNER TO postgres;
+
+--
+-- Name: illplugininfo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE illplugininfo (
+    accountname character varying(32) NOT NULL,
+    modulename character varying(260),
+    exepathinfo character varying(260),
+    servername character varying(32),
+    clientversion character varying(20),
+    playerhostname character varying(128),
+    playerip character varying(20),
+    worldid integer,
+    playername character varying(32),
+    datetime integer,
+    playernetaddr character varying(24)
+);
+
+
+ALTER TABLE public.illplugininfo OWNER TO postgres;
+
+--
+-- Name: init_errlog; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE init_errlog (
+    time_stamp integer NOT NULL,
+    start_time character varying(32) NOT NULL,
+    message text NOT NULL
+);
+
+
+ALTER TABLE public.init_errlog OWNER TO postgres;
+
+--
+-- Name: inventory; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE inventory (
+    id integer NOT NULL,
+    item_id integer NOT NULL,
+    durability integer NOT NULL,
+    maker character varying(32) DEFAULT ''::character varying,
+    rank integer DEFAULT 0,
+    identify smallint DEFAULT 1,
+    magic smallint DEFAULT 0,
+    embedded_amount integer DEFAULT 0,
+    embedded_id1 integer DEFAULT (-1),
+    embedded_id2 integer DEFAULT (-1),
+    embedded_id3 integer DEFAULT (-1),
+    embedded_id4 integer DEFAULT (-1),
+    embedded_id5 integer DEFAULT (-1),
+    embedded_id6 integer DEFAULT (-1),
+    create_time integer DEFAULT 1,
+    due_date integer DEFAULT 0,
+    container_index integer DEFAULT (-1),
+    combo_id integer DEFAULT 0,
+    strengthen integer DEFAULT 0,
+    cur_maxdurability integer DEFAULT 0,
+    bind integer DEFAULT 0,
+    player_id integer NOT NULL,
+    loc integer NOT NULL
+);
+
+
+ALTER TABLE public.inventory OWNER TO postgres;
+
+--
+-- Name: mailitem; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE mailitem (
+    id integer NOT NULL,
+    item_id integer NOT NULL,
+    durability integer NOT NULL,
+    maker character varying(32) DEFAULT ''::character varying,
+    rank integer DEFAULT 0,
+    identify smallint DEFAULT 1,
+    magic smallint DEFAULT 0,
+    embedded_amount integer DEFAULT 0,
+    embedded_id1 integer DEFAULT (-1),
+    embedded_id2 integer DEFAULT (-1),
+    embedded_id3 integer DEFAULT (-1),
+    embedded_id4 integer DEFAULT (-1),
+    embedded_id5 integer DEFAULT (-1),
+    embedded_id6 integer DEFAULT (-1),
+    create_time integer DEFAULT 1,
+    due_date integer DEFAULT 0,
+    container_index integer DEFAULT (-1),
+    combo_id integer DEFAULT 0,
+    strengthen integer DEFAULT 0,
+    cur_maxdurability integer DEFAULT 0,
+    bind integer DEFAULT 0,
+    player_id integer NOT NULL,
+    mail_id integer NOT NULL
+);
+
+
+ALTER TABLE public.mailitem OWNER TO postgres;
+
+--
+-- Name: message_board; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE message_board (
+    message_id integer NOT NULL,
+    title character varying NOT NULL,
+    content character varying NOT NULL,
+    player_name character varying(20) NOT NULL,
+    create_date integer NOT NULL
+);
+
+
+ALTER TABLE public.message_board OWNER TO postgres;
+
+--
+-- Name: mission_dialogues; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE mission_dialogues (
+    id integer NOT NULL,
+    template_id integer,
+    missionlist_id integer DEFAULT 0,
+    content character varying,
+    id_design integer
+);
+
+
+ALTER TABLE public.mission_dialogues OWNER TO postgres;
+
+--
+-- Name: mission_state_transitions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE mission_state_transitions (
+    id integer NOT NULL,
+    mission_state_id_1 integer,
+    mission_state_id_2 integer,
+    comment character varying
+);
+
+
+ALTER TABLE public.mission_state_transitions OWNER TO postgres;
+
+--
+-- Name: mission_states; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE mission_states (
+    id integer NOT NULL,
+    template_id integer,
+    mission_state integer,
+    executioner_state integer,
+    comment character varying
+);
+
+
+ALTER TABLE public.mission_states OWNER TO postgres;
+
+--
+-- Name: npc_greeting; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE npc_greeting (
+    id integer NOT NULL,
+    npc_id integer,
+    greeting_id integer,
+    race_id integer,
+    class_id integer,
+    dialogue_id integer,
+    note text
+);
+
+
+ALTER TABLE public.npc_greeting OWNER TO postgres;
+
+--
+-- Name: personal_mission_states; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE personal_mission_states (
+    id integer NOT NULL,
+    index integer NOT NULL,
+    state integer
+);
+
+
+ALTER TABLE public.personal_mission_states OWNER TO postgres;
+
+--
+-- Name: player_appellation; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE player_appellation (
+    player_id integer NOT NULL,
+    appellation_id integer NOT NULL
+);
+
+
+ALTER TABLE public.player_appellation OWNER TO postgres;
+
+--
+-- Name: player_characters; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE player_characters (
+    id integer NOT NULL,
+    given_name character varying(32),
+    node_id integer DEFAULT 5,
+    x double precision,
+    y double precision,
+    z double precision,
+    face_dir double precision,
+    class_id integer,
+    race_id integer,
+    gender_id integer,
+    hair integer,
+    face integer DEFAULT 0,
+    hair_color integer DEFAULT 0,
+    skin_color integer DEFAULT 1,
+    level integer,
+    exp integer DEFAULT 0,
+    skill_point integer DEFAULT 0,
+    hp integer DEFAULT 0,
+    max_hp integer DEFAULT 0,
+    mp integer DEFAULT 0,
+    max_mp integer DEFAULT 0,
+    combo_point integer DEFAULT 0,
+    gold integer DEFAULT 0,
+    flags character varying DEFAULT ''::character varying,
+    quit integer DEFAULT 1,
+    account_id integer,
+    account_name character varying(32),
+    privilege integer,
+    family_id integer DEFAULT 0,
+    revive_area_id integer,
+    expbonus_gettime integer DEFAULT 0,
+    last_saving_time integer DEFAULT 0,
+    current_level_time integer DEFAULT 0,
+    channel_limit integer DEFAULT 0,
+    login_time_limit timestamp without time zone,
+    create_time timestamp without time zone DEFAULT now(),
+    deleted_time integer DEFAULT 0,
+    reputation integer DEFAULT 0,
+    expand_storage_cnt integer DEFAULT 0,
+    last_normal_area_id integer DEFAULT 0,
+    note text,
+    present_exploit integer DEFAULT 0,
+    total_exploit integer DEFAULT 0,
+    rank integer DEFAULT 0,
+    bank_duedate_1 integer DEFAULT 0,
+    bank_duedate_2 integer DEFAULT 0,
+    bank_duedate_3 integer DEFAULT 0,
+    bank_duedate_4 integer DEFAULT 0,
+    crystal integer DEFAULT 0,
+    appellation integer DEFAULT 0,
+    new_mail integer DEFAULT 0,
+    add_family_time integer DEFAULT 0,
+    spell_card_ground integer DEFAULT 0,
+    spell_card_moon integer DEFAULT 0,
+    spell_card_star integer DEFAULT 0,
+    spell_card_sun integer DEFAULT 0,
+    family_msgboard_state integer DEFAULT 0,
+    spell_card_attr integer DEFAULT 0,
+    max_aa_point integer DEFAULT 0,
+    aa_point integer DEFAULT 0,
+    aa_exp integer DEFAULT 0,
+    aa_rate integer DEFAULT 0,
+    self_comment character varying(256),
+    family_comment character varying(256),
+    family_contribution_point integer DEFAULT 0,
+    CONSTRAINT player_characters_exp CHECK (((exp >= 0) AND (exp <= 2100000000))),
+    CONSTRAINT player_characters_level CHECK (((level >= 1) AND (level <= 200)))
+);
+
+
+ALTER TABLE public.player_characters OWNER TO postgres;
+
+--
+-- Name: player_characters_achievement; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE player_characters_achievement (
+    player_id integer NOT NULL,
+    achievement_id integer NOT NULL,
+    point integer NOT NULL
+);
+
+
+ALTER TABLE public.player_characters_achievement OWNER TO postgres;
+
+--
+-- Name: player_enchants; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE player_enchants (
+    player_id integer NOT NULL,
+    effect_id integer NOT NULL,
+    caster_id integer DEFAULT 0,
+    rest_time integer DEFAULT 0,
+    factor integer DEFAULT 0,
+    counter integer DEFAULT 0,
+    note text
+);
+
+
+ALTER TABLE public.player_enchants OWNER TO postgres;
+
+--
+-- Name: player_mail; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE player_mail (
+    id integer NOT NULL,
+    receiver_id integer NOT NULL,
+    sender_id integer NOT NULL,
+    sender_name character varying(32) DEFAULT ''::character varying,
+    send_time integer NOT NULL,
+    due_date integer NOT NULL,
+    title character varying(40) DEFAULT ''::character varying,
+    content character varying,
+    item_id integer DEFAULT 0,
+    gold integer DEFAULT 0,
+    crystal integer DEFAULT 0,
+    cod integer DEFAULT 0,
+    opened integer DEFAULT 0,
+    returned integer DEFAULT 0
+);
+
+
+ALTER TABLE public.player_mail OWNER TO postgres;
+
+--
+-- Name: player_spellcards; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE player_spellcards (
+    player_id integer DEFAULT 0,
+    enchant_type integer DEFAULT 0,
+    item_id integer DEFAULT 0
+);
+
+
+ALTER TABLE public.player_spellcards OWNER TO postgres;
+
+--
+-- Name: player_spells; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE player_spells (
+    player_id integer NOT NULL,
+    spellmaster_id integer NOT NULL,
+    spell_order integer DEFAULT 0
+);
+
+
+ALTER TABLE public.player_spells OWNER TO postgres;
+
+--
+-- Name: prestige; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE prestige (
+    player_id integer NOT NULL,
+    prestige_id integer NOT NULL,
+    level integer NOT NULL,
+    exp integer NOT NULL
+);
+
+
+ALTER TABLE public.prestige OWNER TO postgres;
+
+--
+-- Name: scenario_mission; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE scenario_mission (
+    id integer NOT NULL,
+    success_event text,
+    timeout_event text,
+    fail_event text,
+    trigger_event text,
+    difficuly numeric,
+    scenario_id numeric,
+    template_id integer,
+    descriptor text
+);
+
+
+ALTER TABLE public.scenario_mission OWNER TO postgres;
+
+--
+-- Name: scenario_mission_key; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE scenario_mission_key (
+    id integer NOT NULL,
+    key_order bigint NOT NULL,
+    key_id bigint,
+    key_name text,
+    CONSTRAINT scenario_mission_key_key_order CHECK (((key_order >= 1000) AND (key_order <= 3999)))
+);
+
+
+ALTER TABLE public.scenario_mission_key OWNER TO postgres;
+
+--
+-- Name: scenario_template; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE scenario_template (
+    template_id integer NOT NULL,
+    scenario_id integer NOT NULL,
+    type smallint DEFAULT 1,
+    trigger_event text,
+    title text
+);
+
+
+ALTER TABLE public.scenario_template OWNER TO postgres;
+
+--
+-- Name: scenarios; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE scenarios (
+    type smallint DEFAULT 1,
+    id integer NOT NULL,
+    scenario_name character varying(64)
+);
+
+
+ALTER TABLE public.scenarios OWNER TO postgres;
+
+SET default_with_oids = true;
+
+--
+-- Name: serverstatus; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE serverstatus (
+    id integer NOT NULL,
+    name character varying(16),
+    ext_address character varying(16),
+    ext_port integer,
+    int_address character varying(16),
+    int_port integer
+);
+
+
+ALTER TABLE public.serverstatus OWNER TO postgres;
+
+SET default_with_oids = false;
+
+--
+-- Name: shortcut_menu; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE shortcut_menu (
+    character_id integer NOT NULL,
+    page smallint NOT NULL,
+    index1 integer DEFAULT (-1) NOT NULL,
+    index2 integer DEFAULT (-1) NOT NULL,
+    index3 integer DEFAULT (-1) NOT NULL,
+    index4 integer DEFAULT (-1) NOT NULL,
+    index5 integer DEFAULT (-1) NOT NULL,
+    index6 integer DEFAULT (-1) NOT NULL,
+    index7 integer DEFAULT (-1) NOT NULL,
+    index8 integer DEFAULT (-1) NOT NULL,
+    index9 integer DEFAULT (-1) NOT NULL,
+    index10 integer DEFAULT (-1) NOT NULL,
+    index11 integer DEFAULT (-1) NOT NULL,
+    index12 integer DEFAULT (-1) NOT NULL
+);
+
+
+ALTER TABLE public.shortcut_menu OWNER TO postgres;
+
+--
+-- Name: state_condition_transitions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE state_condition_transitions (
+    transition_id integer NOT NULL,
+    true_transition_id integer NOT NULL,
+    false_transition_id integer NOT NULL,
+    condition_command character varying,
+    is_prefix integer
+);
+
+
+ALTER TABLE public.state_condition_transitions OWNER TO postgres;
+
+--
+-- Name: state_transition_on_dialogues; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE state_transition_on_dialogues (
+    transition_id integer NOT NULL,
+    star_id integer NOT NULL,
+    dialogue_id integer,
+    dialogue_reply_id integer,
+    do_next_query integer NOT NULL
+);
+
+
+ALTER TABLE public.state_transition_on_dialogues OWNER TO postgres;
+
+--
+-- Name: state_transition_operations; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE state_transition_operations (
+    transition_id integer NOT NULL,
+    command_order integer NOT NULL,
+    command character varying
+);
+
+
+ALTER TABLE public.state_transition_operations OWNER TO postgres;
+
+--
+-- Name: statistics_monster; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE statistics_monster (
+    handle integer NOT NULL,
+    template_id integer DEFAULT 0,
+    death_count integer DEFAULT 0
+);
+
+
+ALTER TABLE public.statistics_monster OWNER TO postgres;
+
+--
+-- Name: statistics_player; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE statistics_player (
+    level integer NOT NULL,
+    player_count integer DEFAULT 0,
+    played_time integer DEFAULT 0
+);
+
+
+ALTER TABLE public.statistics_player OWNER TO postgres;
+
+--
+-- Name: storage; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE storage (
+    id integer NOT NULL,
+    item_id integer NOT NULL,
+    durability integer NOT NULL,
+    maker character varying(32) DEFAULT ''::character varying,
+    rank integer DEFAULT 0,
+    identify smallint DEFAULT 1,
+    magic smallint DEFAULT 0,
+    embedded_amount integer DEFAULT 0,
+    embedded_id1 integer DEFAULT (-1),
+    embedded_id2 integer DEFAULT (-1),
+    embedded_id3 integer DEFAULT (-1),
+    embedded_id4 integer DEFAULT (-1),
+    embedded_id5 integer DEFAULT (-1),
+    embedded_id6 integer DEFAULT (-1),
+    create_time integer DEFAULT 1,
+    due_date integer DEFAULT 0,
+    container_index integer DEFAULT (-1),
+    combo_id integer DEFAULT 0,
+    strengthen integer DEFAULT 0,
+    cur_maxdurability integer DEFAULT 0,
+    bind integer DEFAULT 0,
+    player_id integer NOT NULL,
+    loc integer NOT NULL
+);
+
+
+ALTER TABLE public.storage OWNER TO postgres;
+
+--
+-- Name: template_mission; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE template_mission (
+    id integer NOT NULL,
+    timeout integer,
+    eradicate_time integer,
+    short_desc character varying,
+    long_desc character varying,
+    comment character varying,
+    n_stars integer,
+    n_key_items integer,
+    n_key_places integer,
+    n_key_missions integer,
+    class integer,
+    reward_gold character varying(64) DEFAULT '0'::character varying,
+    reward_exp character varying(64) DEFAULT '0'::character varying,
+    reward_achivement character varying(64) DEFAULT '0'::character varying,
+    reward_object integer DEFAULT 0,
+    n_key_number integer DEFAULT 0
+);
+
+
+ALTER TABLE public.template_mission OWNER TO postgres;
+
+--
+-- Name: transport; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE transport (
+    player_id integer NOT NULL,
+    node_id integer NOT NULL,
+    eventarea_id integer NOT NULL
+);
+
+
+ALTER TABLE public.transport OWNER TO postgres;
+
+--
+-- Name: get_accountbyid(integer); Type: FUNCTION; Schema: public; Owner: spiritking
+--
+
+CREATE FUNCTION get_accountbyid(integer) RETURNS character varying
+    AS $_$Declare	_id alias for $1;
+	user_rec RECORD;
+
+begin
+  SELECT into user_rec account_name from player_characters where id = _id; 
+  if user_rec.account_name is not null then
+	RETURN user_rec.account_name;
+  else 
+	RETURN 0;
+  end if;
+end;$_$
+    LANGUAGE plpgsql;
+
+
+ALTER FUNCTION public.get_accountbyid(integer) OWNER TO spiritking;
+
+--
+-- Name: get_accountsid(character); Type: FUNCTION; Schema: public; Owner: spiritking
+--
+
+CREATE FUNCTION get_accountsid(character) RETURNS character
+    AS $_$
+ 
+Declare	_given_name alias for $1;
+	user_rec RECORD;
+
+begin
+  SELECT into user_rec account_name from player_characters where given_name = _given_name; 
+  if user_rec.account_name is not null then
+	RETURN user_rec.account_name;
+  else 
+	RETURN 0;
+  end if;
+end;
+$_$
+    LANGUAGE plpgsql;
+
+
+ALTER FUNCTION public.get_accountsid(character) OWNER TO spiritking;
+
+--
+-- Name: get_given_name(character); Type: FUNCTION; Schema: public; Owner: spiritking
+--
+
+CREATE FUNCTION get_given_name(character) RETURNS SETOF record
+    AS $_$
+
+Declare
+	_account_name alias for $1;
+	user_rec RECORD;
+
+begin
+ for user_rec IN SELECT id,given_name,level,gold,deleted_time from player_characters where account_name = _account_name 
+  Loop
+	RETURN Next user_rec;
+  end loop;
+
+	RETURN;
+end;
+$_$
+    LANGUAGE plpgsql;
+
+
+ALTER FUNCTION public.get_given_name(character) OWNER TO spiritking;
+
+--
+-- Name: auction_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auction
+    ADD CONSTRAINT auction_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY bags
+    ADD CONSTRAINT bags_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: battlefield_career_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY battlefield_career
+    ADD CONSTRAINT battlefield_career_pkey PRIMARY KEY (player_id);
+
+
+--
+-- Name: battlefield_month_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY battlefield_month
+    ADD CONSTRAINT battlefield_month_pkey PRIMARY KEY (player_id);
+
+
+--
+-- Name: bulletin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY bulletin
+    ADD CONSTRAINT bulletin_pkey PRIMARY KEY (player_name);
+
+
+--
+-- Name: collection_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY collection
+    ADD CONSTRAINT collection_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: configuration_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY configuration
+    ADD CONSTRAINT configuration_pkey PRIMARY KEY (schema_version);
+
+
+--
+-- Name: elf_container_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY elf_container
+    ADD CONSTRAINT elf_container_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: elf_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY elf
+    ADD CONSTRAINT elf_pkey PRIMARY KEY (elf_id);
+
+
+--
+-- Name: equipment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY equipment
+    ADD CONSTRAINT equipment_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: family_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY family
+    ADD CONSTRAINT family_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: final_mission_state_v2_index; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY final_mission_state_v2
+    ADD CONSTRAINT final_mission_state_v2_index PRIMARY KEY (player_id, index);
+
+
+--
+-- Name: friends_index; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY friends
+    ADD CONSTRAINT friends_index PRIMARY KEY (player_id, friend_id);
+
+
+--
+-- Name: greeting_dialogues_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY greeting_dialogues
+    ADD CONSTRAINT greeting_dialogues_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hbo_version_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY hbo_version
+    ADD CONSTRAINT hbo_version_pkey PRIMARY KEY (version_string);
+
+
+--
+-- Name: inventory_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY inventory
+    ADD CONSTRAINT inventory_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mailitem_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY mailitem
+    ADD CONSTRAINT mailitem_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mission_dialogues_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY mission_dialogues
+    ADD CONSTRAINT mission_dialogues_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mission_state_transitions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY mission_state_transitions
+    ADD CONSTRAINT mission_state_transitions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mission_states_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY mission_states
+    ADD CONSTRAINT mission_states_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: npc_greeting_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY npc_greeting
+    ADD CONSTRAINT npc_greeting_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: player_characters_given_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY player_characters
+    ADD CONSTRAINT player_characters_given_name_key UNIQUE (given_name);
+
+
+--
+-- Name: player_characters_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY player_characters
+    ADD CONSTRAINT player_characters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: player_mail_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY player_mail
+    ADD CONSTRAINT player_mail_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: player_spells_index; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY player_spells
+    ADD CONSTRAINT player_spells_index PRIMARY KEY (player_id, spellmaster_id);
+
+
+--
+-- Name: prestige_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY prestige
+    ADD CONSTRAINT prestige_pkey PRIMARY KEY (player_id, prestige_id);
+
+
+--
+-- Name: scenario_mission_key_index; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY scenario_mission_key
+    ADD CONSTRAINT scenario_mission_key_index PRIMARY KEY (id, key_order);
+
+
+--
+-- Name: scenario_mission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY scenario_mission
+    ADD CONSTRAINT scenario_mission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: scenario_template_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY scenario_template
+    ADD CONSTRAINT scenario_template_pkey PRIMARY KEY (template_id);
+
+
+--
+-- Name: serverstatus_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY serverstatus
+    ADD CONSTRAINT serverstatus_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: state_condition_transitions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY state_condition_transitions
+    ADD CONSTRAINT state_condition_transitions_pkey PRIMARY KEY (transition_id);
+
+
+--
+-- Name: state_transition_on_dialogues_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY state_transition_on_dialogues
+    ADD CONSTRAINT state_transition_on_dialogues_pkey PRIMARY KEY (transition_id);
+
+
+--
+-- Name: statistics_monster_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY statistics_monster
+    ADD CONSTRAINT statistics_monster_pkey PRIMARY KEY (handle);
+
+
+--
+-- Name: statistics_player_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY statistics_player
+    ADD CONSTRAINT statistics_player_pkey PRIMARY KEY (level);
+
+
+--
+-- Name: storage_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY storage
+    ADD CONSTRAINT storage_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: template_mission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY template_mission
+    ADD CONSTRAINT template_mission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: transition_operations_index; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY state_transition_operations
+    ADD CONSTRAINT transition_operations_index PRIMARY KEY (transition_id, command_order);
+
+
+--
+-- Name: advanced_ability_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX advanced_ability_index ON advanced_ability USING btree (player_id, effect_id);
+
+
+--
+-- Name: auction_auction_price_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auction_auction_price_index ON auction USING btree (auction_price);
+
+
+--
+-- Name: auction_class_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auction_class_index ON auction USING btree (class);
+
+
+--
+-- Name: auction_duedate_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auction_duedate_index ON auction USING btree (auction_duedate);
+
+
+--
+-- Name: auction_item_type_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auction_item_type_index ON auction USING btree (item_type);
+
+
+--
+-- Name: auction_level_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auction_level_index ON auction USING btree (level);
+
+
+--
+-- Name: auction_quality_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auction_quality_index ON auction USING btree (quality);
+
+
+--
+-- Name: auction_seller_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX auction_seller_index ON auction USING btree (seller_id);
+
+
+--
+-- Name: bags_loc_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX bags_loc_index ON bags USING btree (player_id, container_index, loc);
+
+
+--
+-- Name: bags_pi_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX bags_pi_index ON bags USING btree (player_id);
+
+
+--
+-- Name: collection_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX collection_index ON collection USING btree (account_id);
+
+
+--
+-- Name: elf_ci_player_id_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX elf_ci_player_id_index ON elf USING btree (elf_id, player_id);
+
+
+--
+-- Name: elf_container_con_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX elf_container_con_index ON elf_container USING btree (player_id, container_index);
+
+
+--
+-- Name: elf_container_loc_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX elf_container_loc_index ON elf_container USING btree (elf_id, loc);
+
+
+--
+-- Name: elf_player_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX elf_player_index ON elf USING btree (player_id);
+
+
+--
+-- Name: equipment_loc_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX equipment_loc_index ON equipment USING btree (player_id, container_index, loc);
+
+
+--
+-- Name: family_achievement_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX family_achievement_index ON family_achievement USING btree (family_id, achievement_type);
+
+
+--
+-- Name: family_cadre_members_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX family_cadre_members_index ON family_cadre_members USING btree (family_id, player_id);
+
+
+--
+-- Name: family_message_id_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX family_message_id_index ON family_msgboard USING btree (family_id, message_id);
+
+
+--
+-- Name: final_mission_state_v2_pi_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX final_mission_state_v2_pi_index ON final_mission_state_v2 USING btree (player_id);
+
+
+--
+-- Name: friends_pi_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX friends_pi_index ON friends USING btree (player_id);
+
+
+--
+-- Name: illplugininfo_accountname_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX illplugininfo_accountname_index ON illplugininfo USING btree (accountname);
+
+
+--
+-- Name: illplugininfo_datetime_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX illplugininfo_datetime_index ON illplugininfo USING btree (datetime);
+
+
+--
+-- Name: illplugininfo_modulename_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX illplugininfo_modulename_index ON illplugininfo USING btree (modulename);
+
+
+--
+-- Name: illplugininfo_playerip_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX illplugininfo_playerip_index ON illplugininfo USING btree (playerip);
+
+
+--
+-- Name: illplugininfo_playername_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX illplugininfo_playername_index ON illplugininfo USING btree (playername);
+
+
+--
+-- Name: inventory_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX inventory_index ON inventory USING btree (player_id, loc, container_index);
+
+
+--
+-- Name: inventory_player_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX inventory_player_index ON inventory USING btree (player_id);
+
+
+--
+-- Name: mailitem_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX mailitem_index ON mailitem USING btree (item_id);
+
+
+--
+-- Name: mailitem_mailid_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX mailitem_mailid_index ON mailitem USING btree (player_id, mail_id);
+
+
+--
+-- Name: mission_dialogues_template_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX mission_dialogues_template_id ON mission_dialogues USING btree (template_id);
+
+
+--
+-- Name: mission_state_transitions_id1; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX mission_state_transitions_id1 ON mission_state_transitions USING btree (mission_state_id_1);
+
+
+--
+-- Name: mission_state_transitions_id2; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX mission_state_transitions_id2 ON mission_state_transitions USING btree (mission_state_id_2);
+
+
+--
+-- Name: mission_states_executioner_state; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX mission_states_executioner_state ON mission_states USING btree (executioner_state);
+
+
+--
+-- Name: mission_states_mission_state; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX mission_states_mission_state ON mission_states USING btree (mission_state);
+
+
+--
+-- Name: mission_states_template_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX mission_states_template_id ON mission_states USING btree (template_id);
+
+
+--
+-- Name: personal_mission_states_pi_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX personal_mission_states_pi_index ON personal_mission_states USING btree (id, index);
+
+
+--
+-- Name: player_appellation_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX player_appellation_index ON player_appellation USING btree (player_id);
+
+
+--
+-- Name: player_cardloc_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX player_cardloc_index ON player_spellcards USING btree (player_id, enchant_type);
+
+
+--
+-- Name: player_characters_account_id_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX player_characters_account_id_index ON player_characters USING btree (account_id);
+
+
+--
+-- Name: player_characters_account_name_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX player_characters_account_name_index ON player_characters USING btree (account_name);
+
+
+--
+-- Name: player_characters_achievement_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX player_characters_achievement_index ON player_characters_achievement USING btree (player_id, achievement_id);
+
+
+--
+-- Name: player_characters_deleted_time_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX player_characters_deleted_time_index ON player_characters USING btree (deleted_time);
+
+
+--
+-- Name: player_characters_family_id_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX player_characters_family_id_index ON player_characters USING btree (family_id);
+
+
+--
+-- Name: player_characters_name_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX player_characters_name_index ON player_characters USING btree (given_name);
+
+
+--
+-- Name: player_characters_node_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX player_characters_node_index ON player_characters USING btree (node_id);
+
+
+--
+-- Name: player_enchants_pi_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX player_enchants_pi_index ON player_enchants USING btree (player_id);
+
+
+--
+-- Name: player_mail_receiver_id_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX player_mail_receiver_id_index ON player_mail USING btree (receiver_id, id);
+
+
+--
+-- Name: player_mail_sender_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX player_mail_sender_index ON player_mail USING btree (sender_id);
+
+
+--
+-- Name: player_spells_pi_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX player_spells_pi_index ON player_spells USING btree (player_id);
+
+
+--
+-- Name: scenario_mission_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX scenario_mission_id ON scenario_mission USING btree (scenario_id);
+
+
+--
+-- Name: scenario_mission_key_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX scenario_mission_key_id ON scenario_mission_key USING btree (id);
+
+
+--
+-- Name: scenario_template_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX scenario_template_index ON scenario_template USING btree (scenario_id);
+
+
+--
+-- Name: scenarios_id_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX scenarios_id_index ON scenarios USING btree (id);
+
+
+--
+-- Name: scenarios_type_id_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX scenarios_type_id_index ON scenarios USING btree (type, id);
+
+
+--
+-- Name: scenarios_type_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX scenarios_type_index ON scenarios USING btree (type);
+
+
+--
+-- Name: shortcut_menu_ci_page_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX shortcut_menu_ci_page_index ON shortcut_menu USING btree (character_id, page);
+
+
+--
+-- Name: state_condition_transitions_fid; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX state_condition_transitions_fid ON state_condition_transitions USING btree (false_transition_id);
+
+
+--
+-- Name: state_condition_transitions_tid; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX state_condition_transitions_tid ON state_condition_transitions USING btree (true_transition_id);
+
+
+--
+-- Name: state_transition_operations_co; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX state_transition_operations_co ON state_transition_operations USING btree (command_order);
+
+
+--
+-- Name: state_transition_operations_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX state_transition_operations_id ON state_transition_operations USING btree (transition_id);
+
+
+--
+-- Name: storage_loc_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX storage_loc_index ON storage USING btree (player_id, container_index, loc);
+
+
+--
+-- Name: transport_ci_node_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX transport_ci_node_index ON transport USING btree (player_id, node_id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- Name: advanced_ability; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE advanced_ability FROM PUBLIC;
+REVOKE ALL ON TABLE advanced_ability FROM postgres;
+GRANT ALL ON TABLE advanced_ability TO postgres;
+GRANT ALL ON TABLE advanced_ability TO spiritking;
+
+
+--
+-- Name: auction; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE auction FROM PUBLIC;
+REVOKE ALL ON TABLE auction FROM postgres;
+GRANT ALL ON TABLE auction TO postgres;
+GRANT ALL ON TABLE auction TO spiritking;
+
+
+--
+-- Name: auction_view_by_duedate_dn; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE auction_view_by_duedate_dn FROM PUBLIC;
+REVOKE ALL ON TABLE auction_view_by_duedate_dn FROM postgres;
+GRANT ALL ON TABLE auction_view_by_duedate_dn TO postgres;
+GRANT ALL ON TABLE auction_view_by_duedate_dn TO spiritking;
+
+
+--
+-- Name: auction_view_by_duedate_up; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE auction_view_by_duedate_up FROM PUBLIC;
+REVOKE ALL ON TABLE auction_view_by_duedate_up FROM postgres;
+GRANT ALL ON TABLE auction_view_by_duedate_up TO postgres;
+GRANT ALL ON TABLE auction_view_by_duedate_up TO spiritking;
+
+
+--
+-- Name: auction_view_by_level_dn; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE auction_view_by_level_dn FROM PUBLIC;
+REVOKE ALL ON TABLE auction_view_by_level_dn FROM postgres;
+GRANT ALL ON TABLE auction_view_by_level_dn TO postgres;
+GRANT ALL ON TABLE auction_view_by_level_dn TO spiritking;
+
+
+--
+-- Name: auction_view_by_level_up; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE auction_view_by_level_up FROM PUBLIC;
+REVOKE ALL ON TABLE auction_view_by_level_up FROM postgres;
+GRANT ALL ON TABLE auction_view_by_level_up TO postgres;
+GRANT ALL ON TABLE auction_view_by_level_up TO spiritking;
+
+
+--
+-- Name: auction_view_by_price_dn; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE auction_view_by_price_dn FROM PUBLIC;
+REVOKE ALL ON TABLE auction_view_by_price_dn FROM postgres;
+GRANT ALL ON TABLE auction_view_by_price_dn TO postgres;
+GRANT ALL ON TABLE auction_view_by_price_dn TO spiritking;
+
+
+--
+-- Name: auction_view_by_price_up; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE auction_view_by_price_up FROM PUBLIC;
+REVOKE ALL ON TABLE auction_view_by_price_up FROM postgres;
+GRANT ALL ON TABLE auction_view_by_price_up TO postgres;
+GRANT ALL ON TABLE auction_view_by_price_up TO spiritking;
+
+
+--
+-- Name: auction_view_by_quality_dn; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE auction_view_by_quality_dn FROM PUBLIC;
+REVOKE ALL ON TABLE auction_view_by_quality_dn FROM postgres;
+GRANT ALL ON TABLE auction_view_by_quality_dn TO postgres;
+GRANT ALL ON TABLE auction_view_by_quality_dn TO spiritking;
+
+
+--
+-- Name: auction_view_by_quality_up; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE auction_view_by_quality_up FROM PUBLIC;
+REVOKE ALL ON TABLE auction_view_by_quality_up FROM postgres;
+GRANT ALL ON TABLE auction_view_by_quality_up TO postgres;
+GRANT ALL ON TABLE auction_view_by_quality_up TO spiritking;
+
+
+--
+-- Name: bags; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE bags FROM PUBLIC;
+REVOKE ALL ON TABLE bags FROM postgres;
+GRANT ALL ON TABLE bags TO postgres;
+GRANT ALL ON TABLE bags TO spiritking;
+
+
+--
+-- Name: battlefield_career; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE battlefield_career FROM PUBLIC;
+REVOKE ALL ON TABLE battlefield_career FROM postgres;
+GRANT ALL ON TABLE battlefield_career TO postgres;
+GRANT ALL ON TABLE battlefield_career TO spiritking;
+
+
+--
+-- Name: battlefield_month; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE battlefield_month FROM PUBLIC;
+REVOKE ALL ON TABLE battlefield_month FROM postgres;
+GRANT ALL ON TABLE battlefield_month TO postgres;
+GRANT ALL ON TABLE battlefield_month TO spiritking;
+
+
+--
+-- Name: bulletin; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE bulletin FROM PUBLIC;
+REVOKE ALL ON TABLE bulletin FROM postgres;
+GRANT ALL ON TABLE bulletin TO postgres;
+GRANT ALL ON TABLE bulletin TO spiritking;
+
+
+--
+-- Name: collection; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE collection FROM PUBLIC;
+REVOKE ALL ON TABLE collection FROM postgres;
+GRANT ALL ON TABLE collection TO postgres;
+GRANT ALL ON TABLE collection TO spiritking;
+
+
+--
+-- Name: configuration; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE configuration FROM PUBLIC;
+REVOKE ALL ON TABLE configuration FROM postgres;
+GRANT ALL ON TABLE configuration TO postgres;
+GRANT ALL ON TABLE configuration TO spiritking;
+
+
+--
+-- Name: elf; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE elf FROM PUBLIC;
+REVOKE ALL ON TABLE elf FROM postgres;
+GRANT ALL ON TABLE elf TO postgres;
+GRANT ALL ON TABLE elf TO spiritking;
+
+
+--
+-- Name: elf_container; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE elf_container FROM PUBLIC;
+REVOKE ALL ON TABLE elf_container FROM postgres;
+GRANT ALL ON TABLE elf_container TO postgres;
+GRANT ALL ON TABLE elf_container TO spiritking;
+
+
+--
+-- Name: equipment; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE equipment FROM PUBLIC;
+REVOKE ALL ON TABLE equipment FROM postgres;
+GRANT ALL ON TABLE equipment TO postgres;
+GRANT ALL ON TABLE equipment TO spiritking;
+
+
+--
+-- Name: family; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE family FROM PUBLIC;
+REVOKE ALL ON TABLE family FROM postgres;
+GRANT ALL ON TABLE family TO postgres;
+GRANT ALL ON TABLE family TO spiritking;
+
+
+--
+-- Name: family_achievement; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE family_achievement FROM PUBLIC;
+REVOKE ALL ON TABLE family_achievement FROM postgres;
+GRANT ALL ON TABLE family_achievement TO postgres;
+GRANT ALL ON TABLE family_achievement TO spiritking;
+
+
+--
+-- Name: family_achievement_log; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE family_achievement_log FROM PUBLIC;
+REVOKE ALL ON TABLE family_achievement_log FROM postgres;
+GRANT ALL ON TABLE family_achievement_log TO postgres;
+GRANT ALL ON TABLE family_achievement_log TO spiritking;
+
+
+--
+-- Name: family_cadre_members; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE family_cadre_members FROM PUBLIC;
+REVOKE ALL ON TABLE family_cadre_members FROM postgres;
+GRANT ALL ON TABLE family_cadre_members TO postgres;
+GRANT ALL ON TABLE family_cadre_members TO spiritking;
+
+
+--
+-- Name: family_msgboard; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE family_msgboard FROM PUBLIC;
+REVOKE ALL ON TABLE family_msgboard FROM postgres;
+GRANT ALL ON TABLE family_msgboard TO postgres;
+GRANT ALL ON TABLE family_msgboard TO spiritking;
+
+
+--
+-- Name: final_mission_state_v2; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE final_mission_state_v2 FROM PUBLIC;
+REVOKE ALL ON TABLE final_mission_state_v2 FROM postgres;
+GRANT ALL ON TABLE final_mission_state_v2 TO postgres;
+GRANT ALL ON TABLE final_mission_state_v2 TO spiritking;
+
+
+--
+-- Name: friends; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE friends FROM PUBLIC;
+REVOKE ALL ON TABLE friends FROM postgres;
+GRANT ALL ON TABLE friends TO postgres;
+GRANT ALL ON TABLE friends TO spiritking;
+
+
+--
+-- Name: greeting_dialogues; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE greeting_dialogues FROM PUBLIC;
+REVOKE ALL ON TABLE greeting_dialogues FROM postgres;
+GRANT ALL ON TABLE greeting_dialogues TO postgres;
+GRANT ALL ON TABLE greeting_dialogues TO spiritking;
+
+
+--
+-- Name: hbo_version; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE hbo_version FROM PUBLIC;
+REVOKE ALL ON TABLE hbo_version FROM postgres;
+GRANT ALL ON TABLE hbo_version TO postgres;
+GRANT ALL ON TABLE hbo_version TO spiritking;
+GRANT SELECT ON TABLE hbo_version TO PUBLIC;
+
+
+--
+-- Name: illplugininfo; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE illplugininfo FROM PUBLIC;
+REVOKE ALL ON TABLE illplugininfo FROM postgres;
+GRANT ALL ON TABLE illplugininfo TO postgres;
+GRANT ALL ON TABLE illplugininfo TO spiritking;
+
+
+--
+-- Name: init_errlog; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE init_errlog FROM PUBLIC;
+REVOKE ALL ON TABLE init_errlog FROM postgres;
+GRANT ALL ON TABLE init_errlog TO postgres;
+GRANT ALL ON TABLE init_errlog TO spiritking;
+
+
+--
+-- Name: inventory; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE inventory FROM PUBLIC;
+REVOKE ALL ON TABLE inventory FROM postgres;
+GRANT ALL ON TABLE inventory TO postgres;
+GRANT ALL ON TABLE inventory TO spiritking;
+
+
+--
+-- Name: mailitem; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE mailitem FROM PUBLIC;
+REVOKE ALL ON TABLE mailitem FROM postgres;
+GRANT ALL ON TABLE mailitem TO postgres;
+GRANT ALL ON TABLE mailitem TO spiritking;
+
+
+--
+-- Name: message_board; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE message_board FROM PUBLIC;
+REVOKE ALL ON TABLE message_board FROM postgres;
+GRANT ALL ON TABLE message_board TO postgres;
+GRANT ALL ON TABLE message_board TO spiritking;
+
+
+--
+-- Name: mission_dialogues; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE mission_dialogues FROM PUBLIC;
+REVOKE ALL ON TABLE mission_dialogues FROM postgres;
+GRANT ALL ON TABLE mission_dialogues TO postgres;
+GRANT ALL ON TABLE mission_dialogues TO spiritking;
+
+
+--
+-- Name: mission_state_transitions; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE mission_state_transitions FROM PUBLIC;
+REVOKE ALL ON TABLE mission_state_transitions FROM postgres;
+GRANT ALL ON TABLE mission_state_transitions TO postgres;
+GRANT ALL ON TABLE mission_state_transitions TO spiritking;
+
+
+--
+-- Name: mission_states; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE mission_states FROM PUBLIC;
+REVOKE ALL ON TABLE mission_states FROM postgres;
+GRANT ALL ON TABLE mission_states TO postgres;
+GRANT ALL ON TABLE mission_states TO spiritking;
+
+
+--
+-- Name: npc_greeting; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE npc_greeting FROM PUBLIC;
+REVOKE ALL ON TABLE npc_greeting FROM postgres;
+GRANT ALL ON TABLE npc_greeting TO postgres;
+GRANT ALL ON TABLE npc_greeting TO spiritking;
+
+
+--
+-- Name: personal_mission_states; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE personal_mission_states FROM PUBLIC;
+REVOKE ALL ON TABLE personal_mission_states FROM postgres;
+GRANT ALL ON TABLE personal_mission_states TO postgres;
+GRANT ALL ON TABLE personal_mission_states TO spiritking;
+
+
+--
+-- Name: player_appellation; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE player_appellation FROM PUBLIC;
+REVOKE ALL ON TABLE player_appellation FROM postgres;
+GRANT ALL ON TABLE player_appellation TO postgres;
+GRANT ALL ON TABLE player_appellation TO spiritking;
+
+
+--
+-- Name: player_characters; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE player_characters FROM PUBLIC;
+REVOKE ALL ON TABLE player_characters FROM postgres;
+GRANT ALL ON TABLE player_characters TO postgres;
+GRANT ALL ON TABLE player_characters TO spiritking;
+
+
+--
+-- Name: player_characters_achievement; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE player_characters_achievement FROM PUBLIC;
+REVOKE ALL ON TABLE player_characters_achievement FROM postgres;
+GRANT ALL ON TABLE player_characters_achievement TO postgres;
+GRANT ALL ON TABLE player_characters_achievement TO spiritking;
+
+
+--
+-- Name: player_enchants; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE player_enchants FROM PUBLIC;
+REVOKE ALL ON TABLE player_enchants FROM postgres;
+GRANT ALL ON TABLE player_enchants TO postgres;
+GRANT ALL ON TABLE player_enchants TO spiritking;
+
+
+--
+-- Name: player_mail; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE player_mail FROM PUBLIC;
+REVOKE ALL ON TABLE player_mail FROM postgres;
+GRANT ALL ON TABLE player_mail TO postgres;
+GRANT ALL ON TABLE player_mail TO spiritking;
+
+
+--
+-- Name: player_spellcards; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE player_spellcards FROM PUBLIC;
+REVOKE ALL ON TABLE player_spellcards FROM postgres;
+GRANT ALL ON TABLE player_spellcards TO postgres;
+GRANT ALL ON TABLE player_spellcards TO spiritking;
+
+
+--
+-- Name: player_spells; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE player_spells FROM PUBLIC;
+REVOKE ALL ON TABLE player_spells FROM postgres;
+GRANT ALL ON TABLE player_spells TO postgres;
+GRANT ALL ON TABLE player_spells TO spiritking;
+
+
+--
+-- Name: prestige; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE prestige FROM PUBLIC;
+REVOKE ALL ON TABLE prestige FROM postgres;
+GRANT ALL ON TABLE prestige TO postgres;
+GRANT ALL ON TABLE prestige TO spiritking;
+
+
+--
+-- Name: scenario_mission; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE scenario_mission FROM PUBLIC;
+REVOKE ALL ON TABLE scenario_mission FROM postgres;
+GRANT ALL ON TABLE scenario_mission TO postgres;
+GRANT ALL ON TABLE scenario_mission TO spiritking;
+
+
+--
+-- Name: scenario_mission_key; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE scenario_mission_key FROM PUBLIC;
+REVOKE ALL ON TABLE scenario_mission_key FROM postgres;
+GRANT ALL ON TABLE scenario_mission_key TO postgres;
+GRANT ALL ON TABLE scenario_mission_key TO spiritking;
+
+
+--
+-- Name: scenario_template; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE scenario_template FROM PUBLIC;
+REVOKE ALL ON TABLE scenario_template FROM postgres;
+GRANT ALL ON TABLE scenario_template TO postgres;
+GRANT ALL ON TABLE scenario_template TO spiritking;
+
+
+--
+-- Name: scenarios; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE scenarios FROM PUBLIC;
+REVOKE ALL ON TABLE scenarios FROM postgres;
+GRANT ALL ON TABLE scenarios TO postgres;
+GRANT ALL ON TABLE scenarios TO spiritking;
+
+
+--
+-- Name: serverstatus; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE serverstatus FROM PUBLIC;
+REVOKE ALL ON TABLE serverstatus FROM postgres;
+GRANT ALL ON TABLE serverstatus TO postgres;
+GRANT SELECT ON TABLE serverstatus TO PUBLIC;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE serverstatus TO spiritking;
+
+
+--
+-- Name: shortcut_menu; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE shortcut_menu FROM PUBLIC;
+REVOKE ALL ON TABLE shortcut_menu FROM postgres;
+GRANT ALL ON TABLE shortcut_menu TO postgres;
+GRANT ALL ON TABLE shortcut_menu TO spiritking;
+
+
+--
+-- Name: state_condition_transitions; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE state_condition_transitions FROM PUBLIC;
+REVOKE ALL ON TABLE state_condition_transitions FROM postgres;
+GRANT ALL ON TABLE state_condition_transitions TO postgres;
+GRANT ALL ON TABLE state_condition_transitions TO spiritking;
+
+
+--
+-- Name: state_transition_on_dialogues; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE state_transition_on_dialogues FROM PUBLIC;
+REVOKE ALL ON TABLE state_transition_on_dialogues FROM postgres;
+GRANT ALL ON TABLE state_transition_on_dialogues TO postgres;
+GRANT ALL ON TABLE state_transition_on_dialogues TO spiritking;
+
+
+--
+-- Name: state_transition_operations; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE state_transition_operations FROM PUBLIC;
+REVOKE ALL ON TABLE state_transition_operations FROM postgres;
+GRANT ALL ON TABLE state_transition_operations TO postgres;
+GRANT ALL ON TABLE state_transition_operations TO spiritking;
+
+
+--
+-- Name: statistics_monster; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE statistics_monster FROM PUBLIC;
+REVOKE ALL ON TABLE statistics_monster FROM postgres;
+GRANT ALL ON TABLE statistics_monster TO postgres;
+GRANT ALL ON TABLE statistics_monster TO spiritking;
+
+
+--
+-- Name: statistics_player; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE statistics_player FROM PUBLIC;
+REVOKE ALL ON TABLE statistics_player FROM postgres;
+GRANT ALL ON TABLE statistics_player TO postgres;
+GRANT ALL ON TABLE statistics_player TO spiritking;
+
+
+--
+-- Name: storage; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE storage FROM PUBLIC;
+REVOKE ALL ON TABLE storage FROM postgres;
+GRANT ALL ON TABLE storage TO postgres;
+GRANT ALL ON TABLE storage TO spiritking;
+
+
+--
+-- Name: template_mission; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE template_mission FROM PUBLIC;
+REVOKE ALL ON TABLE template_mission FROM postgres;
+GRANT ALL ON TABLE template_mission TO postgres;
+GRANT ALL ON TABLE template_mission TO spiritking;
+
+
+--
+-- Name: transport; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE transport FROM PUBLIC;
+REVOKE ALL ON TABLE transport FROM postgres;
+GRANT ALL ON TABLE transport TO postgres;
+GRANT ALL ON TABLE transport TO spiritking;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+COPY configuration (schema_version, world_start_time, mission_version) FROM stdin;
+0904031759	2000-01-01	0
+\.

@@ -1,0 +1,12 @@
+<GameThunkServer>		 						//ThunkServer ����
+	<AHServer_Host>
+		<ip>127.0.0.1</ip>						//AHServer Ip ��ַ
+		<port>15306</port>						//AHServer �˿�
+	</AHServer_Host>
+	<LogFile>./hook_log</LogFile>				//Log ·��
+	<GameThunkServer_Start>0</GameThunkServer_Start>			//0 �ر�ת��, 1 ����ת��,
+	<TryConnectionInteval>60000</TryConnectionInteval>			//��AHServer �رպ�,ThunkServer �������ӵļ��
+	<Console>1</Console>							//�Ƿ��� Console ��ʾlog
+	<LogConnectionError>0</LogConnectionError>				//�Ƿ�,��¼ ������Ϣ;һ�㲻Ҫ��¼,ֻ�е��Ե�ʱ��Ŵ�,��ʱ��Ч
+	<MaxCheckConnectionInterval>60000</MaxCheckConnectionInterval>		//������Ϣ������,���ֵ����̫С.
+</GameThunkServer>

@@ -1,0 +1,931 @@
+DROP TABLE itemmall_old;
+DROP INDEX itemmall_pi_index;
+ALTER TABLE itemmall RENAME TO itemmall_old;
+
+CREATE TABLE itemmall (
+item_id integer NOT NULL,
+item_group integer NOT NULL,
+item_index integer NOT NULL,
+item_num integer NOT NULL,
+money_unit integer NOT NULL,
+point integer NOT NULL,
+special_price integer NOT NULL,
+sell integer NOT NULL,
+on_sell_date integer NOT NULL,
+not_sell_date integer NOT NULL,
+account_num_limit integer DEFAULT 0,
+fortune_bag text DEFAULT ''::text,
+note text DEFAULT ''::text
+);
+
+CREATE UNIQUE INDEX itemmall_pi_index ON itemmall USING btree (item_group, item_index, money_unit);
+REVOKE ALL ON TABLE itemmall FROM PUBLIC;
+REVOKE ALL ON TABLE itemmall FROM postgres;
+GRANT ALL ON TABLE itemmall TO postgres;
+GRANT ALL ON TABLE itemmall TO spiritking;
+
+INSERT INTO itemmall VALUES (49212,1,1,1,1,450,399,1,0,2013071710,0,0,'1','');
+INSERT INTO itemmall VALUES (49212,1,2,2,1,900,699,1,0,2013071710,0,0,'1','');
+INSERT INTO itemmall VALUES (49893,1,3,1,1,19,0,1,0,2013072410,0,0,'1','');
+INSERT INTO itemmall VALUES (49484,1,4,1,1,19,15,1,0,2013071710,0,0,'1','');
+INSERT INTO itemmall VALUES (49564,1,5,1,1,100,69,1,0,2013071710,0,0,'1','');
+INSERT INTO itemmall VALUES (49883,1,6,1,1,49,0,1,0,2013071710,0,0,'1','');
+INSERT INTO itemmall VALUES (49471,1,7,1,1,49,39,1,0,2013071710,0,0,'1','');
+INSERT INTO itemmall VALUES (49143,1,8,1,1,999,799,1,0,2013071710,0,0,'內含下列商品：
+狂戰士之魂頭盔 x1
+狂戰士之魂鎧甲 x1
+狂戰士之魂護腿 x1
+狂戰士之魂手甲 x1
+狂戰士之魂甲靴 x1','');
+INSERT INTO itemmall VALUES (49144,1,9,1,1,999,799,1,0,2013071710,0,0,'內含下列商品：
+聖騎士之魂頭盔 x1
+聖騎士之魂胸甲 x1
+聖騎士之魂護腿 x1
+聖騎士之魂護手 x1
+聖騎士之魂甲靴 x1','');
+INSERT INTO itemmall VALUES (49145,1,10,1,1,999,799,1,0,2013071710,0,0,'內含下列商品：
+遊俠之魂羽帽 x1
+遊俠之魂胸甲 x1
+遊俠之魂護腿 x1
+遊俠之魂護手 x1
+遊俠之魂甲靴 x1','');
+INSERT INTO itemmall VALUES (49146,1,11,1,1,999,799,1,0,2013071710,0,0,'內含下列商品：
+刺客之魂面罩 x1
+刺客之魂胸甲 x1
+刺客之魂緊身褲 x1
+刺客之魂護腕 x1
+刺客之魂靴子 x1','');
+INSERT INTO itemmall VALUES (49147,1,12,1,1,999,799,1,0,2013071710,0,0,'內含下列商品：
+神官之魂頭環 x1
+神官之魂法衣 x1
+神官之魂長褲 x1
+神官之魂護手 x1
+神官之魂法靴 x1','');
+INSERT INTO itemmall VALUES (49148,1,13,1,1,999,799,1,0,2013071710,0,0,'內含下列商品：
+祭司之魂頭環 x1
+祭司之魂法衣 x1
+祭司之魂長褲 x1
+祭司之魂護手 x1
+祭司之魂法靴 x1','');
+INSERT INTO itemmall VALUES (49149,1,14,1,1,999,799,1,0,2013071710,0,0,'內含下列商品：
+元素使之魂頭環 x1
+元素使之魂護衣 x1
+元素使之魂緊身褲 x1
+元素使之魂手套 x1
+元素使之魂短靴 x1','');
+INSERT INTO itemmall VALUES (49150,1,15,1,1,999,799,1,0,2013071710,0,0,'內含下列商品：
+地獄使之魂面罩 x1
+地獄使之魂法衣 x1
+地獄使之魂護腿 x1
+地獄使之魂護手 x1
+地獄使之魂法靴 x1','');
+INSERT INTO itemmall VALUES (49893,9,1,5,1,95,76,1,0,0,1,0,'','');
+INSERT INTO itemmall VALUES (41613,9,2,1,1,19,5,1,0,0,5,0,'','');
+INSERT INTO itemmall VALUES (40926,9,3,1,1,39,9,1,0,0,10,0,'','');
+INSERT INTO itemmall VALUES (40299,9,4,1,1,5,1,1,0,0,3,0,'','');
+INSERT INTO itemmall VALUES (40458,9,5,1,1,17,5,1,0,0,1,0,'','');
+INSERT INTO itemmall VALUES (48766,9,6,1,1,69,39,1,0,0,1,0,'','');
+INSERT INTO itemmall VALUES (48768,9,7,1,1,30,5,1,0,0,1,0,'','');
+INSERT INTO itemmall VALUES (48771,9,8,1,1,30,5,1,0,0,1,0,'','');
+INSERT INTO itemmall VALUES (49537,9,9,1,1,14,5,1,0,0,3,0,'','');
+INSERT INTO itemmall VALUES (43538,2,1,1,1,6,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40362,2,2,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49211,2,3,1,1,180,0,1,0,0,0,0,'內含下列商品：
+魔化煉金黏土 x20','');
+INSERT INTO itemmall VALUES (41542,2,4,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49200,2,5,1,1,49,0,1,0,0,0,0,'內含下列商品：
+長程旅行餅乾 x100','');
+INSERT INTO itemmall VALUES (49810,2,6,1,1,69,0,1,0,0,0,0,'內含下列商品：
+長程修行餅乾 x100','');
+INSERT INTO itemmall VALUES (44224,2,7,1,1,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (44223,2,8,1,1,30,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (44226,2,9,1,1,30,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (44229,2,10,1,1,30,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40184,2,11,1,1,39,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (41089,2,12,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49151,2,13,1,1,199,0,1,0,0,0,0,'內含下列商品：
+戰士之魂頭盔 x1
+戰士之魂胸甲 x1
+戰士之魂褲裙 x1
+戰士之魂護手 x1
+戰士之魂長靴 x1','');
+INSERT INTO itemmall VALUES (49152,2,14,1,1,199,0,1,0,0,0,0,'內含下列商品：
+射手之魂頭環 x1
+射手之魂皮衣 x1
+射手之魂褲裙 x1
+射手之魂護腕 x1
+射手之魂長靴 x1','');
+INSERT INTO itemmall VALUES (49153,2,15,1,1,199,0,1,0,0,0,0,'內含下列商品：
+僧侶之魂法冠 x1
+僧侶之魂法袍 x1
+僧侶之魂束褲 x1
+僧侶之魂手套 x1
+僧侶之魂法靴 x1','');
+INSERT INTO itemmall VALUES (49154,2,16,1,1,199,0,1,0,0,0,0,'內含下列商品：
+法師之魂尖帽 x1
+法師之魂法袍 x1
+法師之魂束褲 x1
+法師之魂手套 x1
+法師之魂短靴 x1','');
+INSERT INTO itemmall VALUES (49143,2,17,1,1,999,0,0,0,0,0,0,'內含下列商品：
+狂戰士之魂頭盔 x1
+狂戰士之魂鎧甲 x1
+狂戰士之魂護腿 x1
+狂戰士之魂手甲 x1
+狂戰士之魂甲靴 x1','');
+INSERT INTO itemmall VALUES (49144,2,18,1,1,999,0,0,0,0,0,0,'內含下列商品：
+聖騎士之魂頭盔 x1
+聖騎士之魂胸甲 x1
+聖騎士之魂護腿 x1
+聖騎士之魂護手 x1
+聖騎士之魂甲靴 x1','');
+INSERT INTO itemmall VALUES (49145,2,19,1,1,999,0,0,0,0,0,0,'內含下列商品：
+遊俠之魂羽帽 x1
+遊俠之魂胸甲 x1
+遊俠之魂護腿 x1
+遊俠之魂護手 x1
+遊俠之魂甲靴 x1','');
+INSERT INTO itemmall VALUES (49146,2,20,1,1,999,0,0,0,0,0,0,'內含下列商品：
+刺客之魂面罩 x1
+刺客之魂胸甲 x1
+刺客之魂緊身褲 x1
+刺客之魂護腕 x1
+刺客之魂靴子 x1','');
+INSERT INTO itemmall VALUES (49147,2,21,1,1,999,0,0,0,0,0,0,'內含下列商品：
+神官之魂頭環 x1
+神官之魂法衣 x1
+神官之魂長褲 x1
+神官之魂護手 x1
+神官之魂法靴 x1','');
+INSERT INTO itemmall VALUES (49148,2,22,1,1,999,0,0,0,0,0,0,'內含下列商品：
+祭司之魂頭環 x1
+祭司之魂法衣 x1
+祭司之魂長褲 x1
+祭司之魂護手 x1
+祭司之魂法靴 x1','');
+INSERT INTO itemmall VALUES (49149,2,23,1,1,999,0,0,0,0,0,0,'內含下列商品：
+元素使之魂頭環 x1
+元素使之魂護衣 x1
+元素使之魂緊身褲 x1
+元素使之魂手套 x1
+元素使之魂短靴 x1','');
+INSERT INTO itemmall VALUES (49150,2,24,1,1,999,0,0,0,0,0,0,'內含下列商品：
+地獄使之魂面罩 x1
+地獄使之魂法衣 x1
+地獄使之魂護腿 x1
+地獄使之魂護手 x1
+地獄使之魂法靴 x1','');
+INSERT INTO itemmall VALUES (49271,2,25,1,1,1299,0,1,0,0,0,0,'內含下列商品：
+狂戰魂之頭盔 x1
+狂戰魂之鎧甲 x1
+狂戰魂之護腿 x1
+狂戰魂之手甲 x1
+狂戰魂之甲靴 x1','');
+INSERT INTO itemmall VALUES (49272,2,26,1,1,1299,0,1,0,0,0,0,'內含下列商品：
+聖騎魂之頭盔 x1
+聖騎魂之胸甲 x1
+聖騎魂之護腿 x1
+聖騎魂之護手 x1
+聖騎魂之甲靴 x1','');
+INSERT INTO itemmall VALUES (49273,2,27,1,1,1299,0,1,0,0,0,0,'內含下列商品：
+遊俠魂之羽帽 x1
+遊俠魂之胸甲 x1
+遊俠魂之護腿 x1
+遊俠魂之護手 x1
+遊俠魂之甲靴 x1','');
+INSERT INTO itemmall VALUES (49274,2,28,1,1,1299,0,1,0,0,0,0,'內含下列商品：
+刺客魂之面罩 x1
+刺客魂之胸甲 x1
+刺客魂之緊身褲 x1
+刺客魂之護腕 x1
+刺客魂之靴子 x1','');
+INSERT INTO itemmall VALUES (49275,2,29,1,1,1299,0,1,0,0,0,0,'內含下列商品：
+神官魂之頭環 x1
+神官魂之法衣 x1
+神官魂之長褲 x1
+神官魂之護手 x1
+神官魂之法靴 x1','');
+INSERT INTO itemmall VALUES (49276,2,30,1,1,1299,0,1,0,0,0,0,'內含下列商品：
+祭司魂之頭環 x1
+祭司魂之法衣 x1
+祭司魂之長褲 x1
+祭司魂之護手 x1
+祭司魂之法靴 x1','');
+INSERT INTO itemmall VALUES (49277,2,31,1,1,1299,0,1,0,0,0,0,'內含下列商品：
+元素使魂之頭環 x1
+元素使魂之法衣 x1
+元素使魂之緊身褲 x1
+元素使魂之手套 x1
+元素使魂之短靴 x1','');
+INSERT INTO itemmall VALUES (49278,2,32,1,1,1299,0,1,0,0,0,0,'內含下列商品：
+地獄使魂之面罩 x1
+地獄使魂之法衣 x1
+地獄使魂之護腿 x1
+地獄使魂之護手 x1
+地獄使魂之法靴 x1','');
+INSERT INTO itemmall VALUES (49511,2,33,1,1,1499,0,1,0,0,0,0,'內含下列商品：
+魔鬥魂之頭盔 x1
+魔鬥魂之鎧甲 x1
+魔鬥魂之腿 x1
+魔鬥魂之手甲 x1
+魔鬥魂之甲靴 x1','');
+INSERT INTO itemmall VALUES (49512,2,34,1,1,1499,0,1,0,0,0,0,'內含下列商品：
+天騎魂之頭盔 x1
+天騎魂之胸甲 x1
+天騎魂之護腿 x1
+天騎魂之護手 x1
+天騎魂之甲靴 x1','');
+INSERT INTO itemmall VALUES (49513,2,35,1,1,1499,0,1,0,0,0,0,'內含下列商品：
+秘獵魂之羽帽 x1
+秘獵魂之胸甲 x1
+秘獵魂之護腿 x1
+秘獵魂之護手 x1
+秘獵魂之甲靴 x1','');
+INSERT INTO itemmall VALUES (49514,2,36,1,1,1499,0,1,0,0,0,0,'內含下列商品：
+影者魂之面罩 x1
+影者魂之胸甲 x1
+影者魂之緊身褲 x1
+影者魂之護腕 x1
+影者魂之靴子 x1','');
+INSERT INTO itemmall VALUES (49515,2,37,1,1,1499,0,1,0,0,0,0,'內含下列商品：
+賢者魂之頭環 x1
+賢者魂之法衣 x1
+賢者魂之長褲 x1
+賢者魂之護手 x1
+賢者魂之法靴 x1','');
+INSERT INTO itemmall VALUES (49516,2,38,1,1,1499,0,1,0,0,0,0,'內含下列商品：
+先知魂之頭環 x1
+先知魂之法衣 x1
+先知魂之長褲 x1
+先知魂之護手 x1
+先知魂之法靴 x1','');
+INSERT INTO itemmall VALUES (49517,2,39,1,1,1499,0,1,0,0,0,0,'內含下列商品：
+魔導士魂之頭環 x1
+魔導士魂之護衣 x1
+魔導士魂之緊身褲 x1
+魔導士魂之手套 x1
+魔導士魂之短靴 x1','');
+INSERT INTO itemmall VALUES (49518,2,40,1,1,1499,0,1,0,0,0,0,'內含下列商品：
+死靈魂之面罩 x1
+死靈魂之法衣 x1
+死靈魂之護腿 x1
+死靈魂之護手 x1
+死靈魂之法靴 x1','');
+INSERT INTO itemmall VALUES (49856,2,41,1,1,9,0,1,0,0,0,0,'1','');
+INSERT INTO itemmall VALUES (49857,2,42,1,1,59,0,1,0,0,0,0,'1','');
+INSERT INTO itemmall VALUES (40181,2,43,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (44192,2,44,1,1,49,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49680,3,1,1,1,549,0,1,0,0,0,0,'1','');
+INSERT INTO itemmall VALUES (49679,3,2,1,1,1099,0,1,0,0,0,0,'1','');
+INSERT INTO itemmall VALUES (49260,3,3,1,1,19,0,1,0,0,0,0,'有機會抽中下列各式物品：
+穩重少年制服、活潑少女制服、蘿莉塔禮服、暗夜吸血鬼套裝、驚悚南瓜晚禮服
+帥氣號令軍裝、性感統馭軍裝、朝氣野球套裝、亮麗應援套裝、赤焰海盜套裝
+帥氣聖誕套裝、性感聖誕套裝、俏麗女僕短裙、神聖騎士正裝、甜美女僕短裙
+暗夜騎士正裝
+穩重少年制服(限時) x1、活潑少女制服(限時) x1
+暗夜吸血鬼套裝(限時) x1、驚悚南瓜晚禮服(限時) x1、帥氣號令軍裝(限時) x1
+性感統馭軍裝(限時) x1、朝氣野球套裝(限時) x1、亮麗應援套裝(限時) x1
+赤焰海盜套裝(限時) x1、帥氣聖誕套裝(限時) x1、性感聖誕套裝(限時) x1
+俏麗女僕短裙(限時) x1、神聖騎士正裝(限時) x1、甜美女僕短裙(限時) x1
+暗夜騎士正裝(限時) x1
+魔化煉金黏土 x3、急救藥水 x160、中型急救藥水 x120
+大型急救藥水 x95、強效急救藥水 x80、珍貴急救藥水 x70
+魔力藥水 x160、中型魔力藥水 x120、大型魔力藥水 x95
+強效魔力藥水 x80、珍貴魔力藥水 x70','');
+INSERT INTO itemmall VALUES (49057,3,4,1,1,19,0,1,0,0,0,0,'有機會抽中下列各式物品：
+粉紅兔耳 x1、主坦標誌 x1、補師標誌 x1
+打手標誌 x1、吸趴標誌 x1、貓耳 x1
+海盜船長帽 x1、歌星爆炸頭 x1、粉粉草莓頭 x1
+彩色阿福柔 x1、大蝴蝶結 x1、頭痛頭飾 x1
+貓熊耳機 x1、果凍兔頭飾 x1、圓框眼鏡 x1
+蕾絲繫帶帽 x1、小熊頭盔 x1、 麋鹿頭盔 x1
+紙袋套頭 x1、 麋鹿角頭飾 x1、 黑框眼鏡 x1
+新年瓜皮帽 x1、乳牛帽 x1、穿頭愛神箭  x1
+粉紅兔耳(限時) x1、主坦標誌(限時) x1、補師標誌(限時) x1
+打手標誌(限時) x1、吸趴標誌(限時) x1、貓耳(限時)  x1
+海盜船長帽(限時) x1、歌星爆炸頭(限時) x1、粉粉草莓頭(限時) x1
+彩色阿福柔(限時) x1、大蝴蝶結(限時) x1、頭痛頭飾(限時)  x1
+貓熊耳機(限時) x1、果凍兔頭飾(限時)  x1、圓框眼鏡(限時) x1
+蕾絲繫帶帽(限時) x1、小熊頭盔(限時) x1、麋鹿頭盔(限時) x1
+紙袋套頭(限時) x1、乳牛帽(限時)  x1、、穿頭愛神箭(限時) x1
+水藍蕾絲繫帶帽 x1、魔化煉金黏土 x2、急救藥水 x160
+中型急救藥水 x120、大型急救藥水 x95、強效急救藥水 x80
+珍貴急救藥水 x70、魔力藥水 x160、中型魔力藥水 x120
+大型魔力藥水 x95、強效魔力藥水 x80、珍貴魔力藥水 x70','');
+INSERT INTO itemmall VALUES (49058,3,5,1,1,19,0,1,0,0,0,0,'有機會抽中下列各式物品：
+彩蝶翅膀 x1、墮落的黑色天使之翼 x1、天使之翼 x1　
+惡魔之翼 x1、古代遺產之翼 x1、雙鬼丸 x1
+愛戀情人背包 x1、藍龍之翼 x1、黑色鳳蝶羽翼 x1
+墮落的黑色天使之翼(限時) x1、彩蝶翅膀(限時) x1、天使之翼(限時) x1　
+惡魔之翼(限時) x1、古代遺產之翼(限時) x1、雙鬼丸(限時) x1
+愛戀情人背包(限時) x1、藍龍之翼(限時) x1、黑色鳳蝶羽翼(限時) x1
+魔化煉金黏土 x2、急救藥水 x160、中型急救藥水 x120
+大型急救藥水 x95、強效急救藥水 x80、珍貴急救藥水 x70
+魔力藥水 x160、中型魔力藥水 x120、大型魔力藥水 x95
+強效魔力藥水 x80、珍貴魔力藥水 x70','');
+INSERT INTO itemmall VALUES (49059,3,6,1,1,19,0,1,0,0,0,0,'有機會抽中下列各式物品：
+閃亮仙女棒 x1、節慶柺杖糖 x1、紅色搖滾電吉他 x1
+囧臉精靈大槌 x1、黑色搖滾電吉他 x1、光之軍刃 x1
+囧臉精靈大槌(限時) x1、閃亮仙女棒(限時) x1、節慶柺杖糖(限時) x1
+紅色搖滾電吉他(限時) x1、黑色搖滾電吉他(限時) x1、光之軍刃(限時) x1
+魔化煉金黏土 x2、急救藥水 x160、中型急救藥水 x120
+大型急救藥水 x95、強效急救藥水 x80、珍貴急救藥水 x70
+魔力藥水 x160、中型魔力藥水 x120、大型魔力藥水 x95
+強效魔力藥水 x80、珍貴魔力藥水 x70','');
+INSERT INTO itemmall VALUES (49062,3,7,1,1,19,0,1,0,0,0,0,'有機會抽中下列各式物品：
+雪白的高地髦牛座騎 x1、雪白的大長老髦牛座騎 x1、神秘的貓熊座騎 x1
+神秘的貓熊族長座騎 x1、黃色的果凍兔座騎 x1、黃色的豪華果凍兔座騎 x1
+潔白的獨角獸座騎 x1、潔白的傳說獨角獸座騎 x1
+雪白的高地髦牛座騎(限時) x1、雪白的大長老髦牛座騎(限時) x1、神秘的貓熊座騎(限時) x1
+神秘的貓熊族長座騎(限時) x1、黃色的果凍兔座騎(限時) x1、黃色的豪華果凍兔座騎(限時) x1
+潔白的獨角獸座騎(限時) x1、潔白的傳說獨角獸座騎(限時) x1
+魔化煉金黏土 x2、急救藥水 x160、中型急救藥水 x120
+大型急救藥水 x95、強效急救藥水 x80、珍貴急救藥水 x70
+魔力藥水 x160、中型魔力藥水 x120、大型魔力藥水 x95
+強效魔力藥水 x80、珍貴魔力藥水 x70','');
+INSERT INTO itemmall VALUES (49198,4,1,1,1,9,0,1,0,0,0,0,'內含下列商品：
+傳送石 x20','');
+INSERT INTO itemmall VALUES (49855,4,2,1,1,15,0,1,0,0,0,0,'1','');
+INSERT INTO itemmall VALUES (49862,4,3,1,1,5,0,1,0,0,0,0,'1','');
+INSERT INTO itemmall VALUES (40572,4,4,1,1,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40114,4,5,1,1,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (41091,4,6,1,1,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (41092,4,7,1,1,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49854,4,8,1,1,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (41089,4,9,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49199,4,10,1,1,9,0,1,0,0,0,0,'內含下列商品：
+簡便的修復鎚子 x10','');
+INSERT INTO itemmall VALUES (40184,4,11,1,1,39,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40380,4,12,1,1,39,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (41493,4,13,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40186,4,14,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40187,4,15,1,1,39,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40200,4,16,1,1,5,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40201,4,17,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40040,5,1,1,1,2,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40042,5,2,1,1,4,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40614,5,3,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40615,5,4,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40312,5,5,1,1,179,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49858,5,6,1,1,6,0,1,0,0,0,0,'內含下列商品：
+珍貴急救藥水 x50','');
+INSERT INTO itemmall VALUES (49859,5,7,1,1,8,0,1,0,0,0,0,'內含下列商品：
+珍貴急救藥水 x50','');
+INSERT INTO itemmall VALUES (49860,5,8,1,1,10,0,1,0,0,0,0,'內含下列商品：
+珍貴急救藥水 x50','');
+INSERT INTO itemmall VALUES (49861,5,9,1,1,12,0,1,0,0,0,0,'內含下列商品：
+珍貴急救藥水 x50','');
+INSERT INTO itemmall VALUES (49207,5,10,1,1,14,0,1,0,0,0,0,'內含下列商品：
+珍貴急救藥水 x50','');
+INSERT INTO itemmall VALUES (49210,5,11,1,1,14,0,1,0,0,0,0,'內含下列商品：
+珍貴魔力藥水 x50','');
+INSERT INTO itemmall VALUES (49283,5,12,1,1,16,0,1,0,0,0,0,'內含下列商品：
+精華急救藥水 x50','');
+INSERT INTO itemmall VALUES (49284,5,13,1,1,16,0,1,0,0,0,0,'內含下列商品：
+精華魔力藥水 x50','');
+INSERT INTO itemmall VALUES (49261,5,14,1,1,15,0,1,0,0,0,0,'內含下列商品：
+經驗的靈修寶石 x2','');
+INSERT INTO itemmall VALUES (49262,5,15,1,1,15,0,1,0,0,0,0,'內含下列商品：
+專精的靈修寶石 x2','');
+INSERT INTO itemmall VALUES (40616,5,16,1,1,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40617,5,17,1,1,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40618,5,18,1,1,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40619,5,19,1,1,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40620,5,20,1,1,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40624,5,21,1,1,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40623,5,22,1,1,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40622,5,23,1,1,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40621,5,24,1,1,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49838,5,25,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49839,5,26,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49840,5,27,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49841,5,28,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49842,5,29,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49843,5,30,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49844,5,31,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49845,5,32,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49846,5,33,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49847,5,34,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49848,5,35,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49849,5,36,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49850,5,37,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49851,5,38,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49852,5,39,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49853,5,40,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (43611,6,1,1,1,299,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40509,6,2,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40510,6,3,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (43752,6,4,1,1,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (43753,6,5,1,1,25,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30847,6,6,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30848,6,7,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30849,6,8,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30850,6,9,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30851,6,10,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30852,6,11,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30853,6,12,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30854,6,13,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30855,6,14,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30856,6,15,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30857,6,16,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30858,6,17,1,1,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (35692,6,18,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (35693,6,19,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (35694,6,20,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (35695,6,21,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (35696,6,22,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (35697,6,23,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (38808,6,24,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (38809,6,25,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (38810,6,26,1,1,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (39234,6,27,1,1,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (39235,6,28,1,1,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (39236,6,29,1,1,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (39377,6,30,1,1,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (39378,6,31,1,1,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (39379,6,32,1,1,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40401,7,1,1,1,89,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40322,7,2,1,1,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40100,7,3,1,1,79,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40101,7,4,1,1,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40102,7,5,1,1,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40103,7,6,1,1,79,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40116,7,7,1,1,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40117,7,8,1,1,79,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40119,7,9,1,1,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40120,7,10,1,1,79,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40239,7,11,1,1,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40240,7,12,1,1,79,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40243,7,13,1,1,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40439,7,14,1,1,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40138,7,15,1,1,199,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40140,7,16,1,1,149,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40141,7,17,1,1,149,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40349,7,18,1,1,129,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49172,8,1,1,1,399,0,1,0,0,0,0,'內含下列商品：
+統御軍帽 x1
+帥氣號令軍裝 x1','');
+INSERT INTO itemmall VALUES (49173,8,2,1,1,399,0,1,0,0,0,0,'內含下列商品：
+統御軍帽 x1
+性感統馭軍裝 x1','');
+INSERT INTO itemmall VALUES (40578,8,3,1,1,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40465,8,4,1,1,349,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40466,8,5,1,1,249,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40692,8,6,1,1,299,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40327,8,7,1,1,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40225,8,8,1,1,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40227,8,9,1,1,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40229,8,10,1,1,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40231,8,11,1,1,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40347,8,12,1,1,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49323,2,1,1,2,9,0,1,0,0,0,0,'有機會抽中下列各式物品：
+魔化煉金黏土 x1、魔化煉金黏土 x5
+魔化煉金黏土 x15、魔化煉金黏土 x40
+魔化煉金黏土 x65、魔化煉金黏土 x100','');
+INSERT INTO itemmall VALUES (40362,2,2,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49211,2,3,1,2,180,0,1,0,0,0,0,'內含下列商品：
+魔化煉金黏土 x20','');
+INSERT INTO itemmall VALUES (41542,2,4,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49200,2,5,1,2,49,0,1,0,0,0,0,'內含下列商品：
+長程旅行餅乾 x100','');
+INSERT INTO itemmall VALUES (49810,2,6,1,2,69,0,1,0,0,0,0,'內含下列商品：
+長程修行餅乾 x100','');
+INSERT INTO itemmall VALUES (42973,2,7,1,2,39,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (41263,2,8,1,2,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (41264,2,9,1,2,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (43554,2,10,1,2,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40184,2,11,1,2,39,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (41089,2,12,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49151,2,13,1,2,199,0,1,0,0,0,0,'內含下列商品：
+戰士之魂頭盔 x1
+戰士之魂胸甲 x1
+戰士之魂褲裙 x1
+戰士之魂護手 x1
+戰士之魂長靴 x1','');
+INSERT INTO itemmall VALUES (49152,2,14,1,2,199,0,1,0,0,0,0,'內含下列商品：
+射手之魂頭環 x1
+射手之魂皮衣 x1
+射手之魂褲裙 x1
+射手之魂護腕 x1
+射手之魂長靴 x1','');
+INSERT INTO itemmall VALUES (49153,2,15,1,2,199,0,1,0,0,0,0,'內含下列商品：
+僧侶之魂法冠 x1
+僧侶之魂法袍 x1
+僧侶之魂束褲 x1
+僧侶之魂手套 x1
+僧侶之魂法靴 x1','');
+INSERT INTO itemmall VALUES (49154,2,16,1,2,199,0,1,0,0,0,0,'內含下列商品：
+法師之魂尖帽 x1
+法師之魂法袍 x1
+法師之魂束褲 x1
+法師之魂手套 x1
+法師之魂短靴 x1','');
+INSERT INTO itemmall VALUES (49143,2,17,1,2,999,0,1,0,0,0,0,'內含下列商品：
+狂戰士之魂頭盔 x1
+狂戰士之魂鎧甲 x1
+狂戰士之魂護腿 x1
+狂戰士之魂手甲 x1
+狂戰士之魂甲靴 x1','');
+INSERT INTO itemmall VALUES (49144,2,18,1,2,999,0,1,0,0,0,0,'內含下列商品：
+聖騎士之魂頭盔 x1
+聖騎士之魂胸甲 x1
+聖騎士之魂護腿 x1
+聖騎士之魂護手 x1
+聖騎士之魂甲靴 x1','');
+INSERT INTO itemmall VALUES (49145,2,19,1,2,999,0,1,0,0,0,0,'內含下列商品：
+遊俠之魂羽帽 x1
+遊俠之魂胸甲 x1
+遊俠之魂護腿 x1
+遊俠之魂護手 x1
+遊俠之魂甲靴 x1','');
+INSERT INTO itemmall VALUES (49146,2,20,1,2,999,0,1,0,0,0,0,'內含下列商品：
+刺客之魂面罩 x1
+刺客之魂胸甲 x1
+刺客之魂緊身褲 x1
+刺客之魂護腕 x1
+刺客之魂靴子 x1','');
+INSERT INTO itemmall VALUES (49147,2,21,1,2,999,0,1,0,0,0,0,'內含下列商品：
+神官之魂頭環 x1
+神官之魂法衣 x1
+神官之魂長褲 x1
+神官之魂護手 x1
+神官之魂法靴 x1','');
+INSERT INTO itemmall VALUES (49148,2,22,1,2,999,0,1,0,0,0,0,'內含下列商品：
+祭司之魂頭環 x1
+祭司之魂法衣 x1
+祭司之魂長褲 x1
+祭司之魂護手 x1
+祭司之魂法靴 x1','');
+INSERT INTO itemmall VALUES (49149,2,23,1,2,999,0,1,0,0,0,0,'內含下列商品：
+元素使之魂頭環 x1
+元素使之魂護衣 x1
+元素使之魂緊身褲 x1
+元素使之魂手套 x1
+元素使之魂短靴 x1','');
+INSERT INTO itemmall VALUES (49150,2,24,1,2,999,0,1,0,0,0,0,'內含下列商品：
+地獄使之魂面罩 x1
+地獄使之魂法衣 x1
+地獄使之魂護腿 x1
+地獄使之魂護手 x1
+地獄使之魂法靴 x1','');
+INSERT INTO itemmall VALUES (49271,2,25,1,2,1299,0,1,0,0,0,0,'內含下列商品：
+狂戰魂之頭盔 x1
+狂戰魂之鎧甲 x1
+狂戰魂之護腿 x1
+狂戰魂之手甲 x1
+狂戰魂之甲靴 x1','');
+INSERT INTO itemmall VALUES (49272,2,26,1,2,1299,0,1,0,0,0,0,'內含下列商品：
+聖騎魂之頭盔 x1
+聖騎魂之胸甲 x1
+聖騎魂之護腿 x1
+聖騎魂之護手 x1
+聖騎魂之甲靴 x1','');
+INSERT INTO itemmall VALUES (49273,2,27,1,2,1299,0,1,0,0,0,0,'內含下列商品：
+遊俠魂之羽帽 x1
+遊俠魂之胸甲 x1
+遊俠魂之護腿 x1
+遊俠魂之護手 x1
+遊俠魂之甲靴 x1','');
+INSERT INTO itemmall VALUES (49274,2,28,1,2,1299,0,1,0,0,0,0,'內含下列商品：
+刺客魂之面罩 x1
+刺客魂之胸甲 x1
+刺客魂之緊身褲 x1
+刺客魂之護腕 x1
+刺客魂之靴子 x1','');
+INSERT INTO itemmall VALUES (49275,2,29,1,2,1299,0,1,0,0,0,0,'內含下列商品：
+神官魂之頭環 x1
+神官魂之法衣 x1
+神官魂之長褲 x1
+神官魂之護手 x1
+神官魂之法靴 x1','');
+INSERT INTO itemmall VALUES (49276,2,30,1,2,1299,0,1,0,0,0,0,'內含下列商品：
+祭司魂之頭環 x1
+祭司魂之法衣 x1
+祭司魂之長褲 x1
+祭司魂之護手 x1
+祭司魂之法靴 x1','');
+INSERT INTO itemmall VALUES (49277,2,31,1,2,1299,0,1,0,0,0,0,'內含下列商品：
+元素使魂之頭環 x1
+元素使魂之法衣 x1
+元素使魂之緊身褲 x1
+元素使魂之手套 x1
+元素使魂之短靴 x1','');
+INSERT INTO itemmall VALUES (49278,2,32,1,2,1299,0,1,0,0,0,0,'內含下列商品：
+地獄使魂之面罩 x1
+地獄使魂之法衣 x1
+地獄使魂之護腿 x1
+地獄使魂之護手 x1
+地獄使魂之法靴 x1','');
+INSERT INTO itemmall VALUES (49511,2,33,1,2,1499,0,1,0,0,0,0,'內含下列商品：
+魔鬥魂之頭盔 x1
+魔鬥魂之鎧甲 x1
+魔鬥魂之腿 x1
+魔鬥魂之手甲 x1
+魔鬥魂之甲靴 x1','');
+INSERT INTO itemmall VALUES (49512,2,34,1,2,1499,0,1,0,0,0,0,'內含下列商品：
+天騎魂之頭盔 x1
+天騎魂之胸甲 x1
+天騎魂之護腿 x1
+天騎魂之護手 x1
+天騎魂之甲靴 x1','');
+INSERT INTO itemmall VALUES (49513,2,35,1,2,1499,0,1,0,0,0,0,'內含下列商品：
+秘獵魂之羽帽 x1
+秘獵魂之胸甲 x1
+秘獵魂之護腿 x1
+秘獵魂之護手 x1
+秘獵魂之甲靴 x1','');
+INSERT INTO itemmall VALUES (49514,2,36,1,2,1499,0,1,0,0,0,0,'內含下列商品：
+影者魂之面罩 x1
+影者魂之胸甲 x1
+影者魂之緊身褲 x1
+影者魂之護腕 x1
+影者魂之靴子 x1','');
+INSERT INTO itemmall VALUES (49515,2,37,1,2,1499,0,1,0,0,0,0,'內含下列商品：
+賢者魂之頭環 x1
+賢者魂之法衣 x1
+賢者魂之長褲 x1
+賢者魂之護手 x1
+賢者魂之法靴 x1','');
+INSERT INTO itemmall VALUES (49516,2,38,1,2,1499,0,1,0,0,0,0,'內含下列商品：
+先知魂之頭環 x1
+先知魂之法衣 x1
+先知魂之長褲 x1
+先知魂之護手 x1
+先知魂之法靴 x1','');
+INSERT INTO itemmall VALUES (49517,2,39,1,2,1499,0,1,0,0,0,0,'內含下列商品：
+魔導士魂之頭環 x1
+魔導士魂之護衣 x1
+魔導士魂之緊身褲 x1
+魔導士魂之手套 x1
+魔導士魂之短靴 x1','');
+INSERT INTO itemmall VALUES (49518,2,40,1,2,1499,0,1,0,0,0,0,'內含下列商品：
+死靈魂之面罩 x1
+死靈魂之法衣 x1
+死靈魂之護腿 x1
+死靈魂之護手 x1
+死靈魂之法靴 x1','');
+INSERT INTO itemmall VALUES (49856,2,41,1,2,9,0,1,0,0,0,0,'1','');
+INSERT INTO itemmall VALUES (49857,2,42,1,2,59,0,1,0,0,0,0,'1','');
+INSERT INTO itemmall VALUES (40181,2,43,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (44192,2,44,1,2,49,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49893,3,1,1,2,19,0,1,0,2013071710,0,0,'','');
+INSERT INTO itemmall VALUES (49519,3,2,1,2,19,0,1,0,0,0,0,'有機會抽到下列商品：
+至尊紅蓮虎座騎 x1、至尊紅蓮虎座騎 x1(限時)
+改‧超合金噴射閃翼 x1、改‧超合金噴射閃翼 x1(限時)
+藍寶石的工匠鑿子 x1、名匠的修復鎚子 x2
+3級蓋亞祝福 x3、精華急救藥水 x60
+精華魔力藥水 x60、強化幸運草 x4
+合成幸運草 x1、經驗護符 x4
+幸運護符 x3、靈魂呼喚之燈 x10
+共鳴石消除器 x1、紋章移取裝置 x1','');
+INSERT INTO itemmall VALUES (49552,3,3,1,2,19,0,1,0,0,0,0,'有機會抽到下列商品：
+愛戀展翼的幸福雙人馬車 x1、愛戀展翼的幸福雙人馬車 x1(限時)
+藍寶石的工匠鑿子 x1、名匠的修復鎚子 x2
+3級蓋亞祝福 x3、精華急救藥水 x60
+精華魔力藥水 x60、強化幸運草 x4
+合成幸運草 x1、經驗護符 x4
+幸運護符 x3、靈魂呼喚之燈 x10
+共鳴石消除器 x1、紋章移取裝置 x1','');
+INSERT INTO itemmall VALUES (49260,3,4,1,2,19,0,1,0,0,0,0,'有機會抽中下列各式物品：
+穩重少年制服、活潑少女制服、蘿莉塔禮服、暗夜吸血鬼套裝、驚悚南瓜晚禮服
+帥氣號令軍裝、性感統馭軍裝、朝氣野球套裝、亮麗應援套裝、赤焰海盜套裝
+帥氣聖誕套裝、性感聖誕套裝、俏麗女僕短裙、神聖騎士正裝、甜美女僕短裙
+暗夜騎士正裝
+穩重少年制服(限時) x1、活潑少女制服(限時) x1
+暗夜吸血鬼套裝(限時) x1、驚悚南瓜晚禮服(限時) x1、帥氣號令軍裝(限時) x1
+性感統馭軍裝(限時) x1、朝氣野球套裝(限時) x1、亮麗應援套裝(限時) x1
+赤焰海盜套裝(限時) x1、帥氣聖誕套裝(限時) x1、性感聖誕套裝(限時) x1
+俏麗女僕短裙(限時) x1、神聖騎士正裝(限時) x1、甜美女僕短裙(限時) x1
+暗夜騎士正裝(限時) x1
+魔化煉金黏土 x3、急救藥水 x160、中型急救藥水 x120
+大型急救藥水 x95、強效急救藥水 x80、珍貴急救藥水 x70
+魔力藥水 x160、中型魔力藥水 x120、大型魔力藥水 x95
+強效魔力藥水 x80、珍貴魔力藥水 x70','');
+INSERT INTO itemmall VALUES (49057,3,5,1,2,19,0,1,0,0,0,0,'有機會抽中下列各式物品：
+粉紅兔耳 x1、主坦標誌 x1、補師標誌 x1
+打手標誌 x1、吸趴標誌 x1、貓耳 x1
+海盜船長帽 x1、歌星爆炸頭 x1、粉粉草莓頭 x1
+彩色阿福柔 x1、大蝴蝶結 x1、頭痛頭飾 x1
+貓熊耳機 x1、果凍兔頭飾 x1、圓框眼鏡 x1
+蕾絲繫帶帽 x1、小熊頭盔 x1、 麋鹿頭盔 x1
+紙袋套頭 x1、 麋鹿角頭飾 x1、 黑框眼鏡 x1
+新年瓜皮帽 x1、乳牛帽 x1、穿頭愛神箭  x1
+粉紅兔耳(限時) x1、主坦標誌(限時) x1、補師標誌(限時) x1
+打手標誌(限時) x1、吸趴標誌(限時) x1、貓耳(限時)  x1
+海盜船長帽(限時) x1、歌星爆炸頭(限時) x1、粉粉草莓頭(限時) x1
+彩色阿福柔(限時) x1、大蝴蝶結(限時) x1、頭痛頭飾(限時)  x1
+貓熊耳機(限時) x1、果凍兔頭飾(限時)  x1、圓框眼鏡(限時) x1
+蕾絲繫帶帽(限時) x1、小熊頭盔(限時) x1、麋鹿頭盔(限時) x1
+紙袋套頭(限時) x1、乳牛帽(限時)  x1、、穿頭愛神箭(限時) x1
+水藍蕾絲繫帶帽 x1、魔化煉金黏土 x2、急救藥水 x160
+中型急救藥水 x120、大型急救藥水 x95、強效急救藥水 x80
+珍貴急救藥水 x70、魔力藥水 x160、中型魔力藥水 x120
+大型魔力藥水 x95、強效魔力藥水 x80、珍貴魔力藥水 x70','');
+INSERT INTO itemmall VALUES (49058,3,6,1,2,19,0,1,0,0,0,0,'有機會抽中下列各式物品：
+彩蝶翅膀 x1、墮落的黑色天使之翼 x1、天使之翼 x1　
+惡魔之翼 x1、古代遺產之翼 x1、雙鬼丸 x1
+愛戀情人背包 x1、藍龍之翼 x1、黑色鳳蝶羽翼 x1
+墮落的黑色天使之翼(限時) x1、彩蝶翅膀(限時) x1、天使之翼(限時) x1　
+惡魔之翼(限時) x1、古代遺產之翼(限時) x1、雙鬼丸(限時) x1
+愛戀情人背包(限時) x1、藍龍之翼(限時) x1、黑色鳳蝶羽翼(限時) x1
+魔化煉金黏土 x2、急救藥水 x160、中型急救藥水 x120
+大型急救藥水 x95、強效急救藥水 x80、珍貴急救藥水 x70
+魔力藥水 x160、中型魔力藥水 x120、大型魔力藥水 x95
+強效魔力藥水 x80、珍貴魔力藥水 x70','');
+INSERT INTO itemmall VALUES (49059,3,7,1,2,19,0,1,0,0,0,0,'有機會抽中下列各式物品：
+閃亮仙女棒 x1、節慶柺杖糖 x1、紅色搖滾電吉他 x1
+囧臉精靈大槌 x1、黑色搖滾電吉他 x1、光之軍刃 x1
+囧臉精靈大槌(限時) x1、閃亮仙女棒(限時) x1、節慶柺杖糖(限時) x1
+紅色搖滾電吉他(限時) x1、黑色搖滾電吉他(限時) x1、光之軍刃(限時) x1
+魔化煉金黏土 x2、急救藥水 x160、中型急救藥水 x120
+大型急救藥水 x95、強效急救藥水 x80、珍貴急救藥水 x70
+魔力藥水 x160、中型魔力藥水 x120、大型魔力藥水 x95
+強效魔力藥水 x80、珍貴魔力藥水 x70','');
+INSERT INTO itemmall VALUES (49062,3,8,1,2,19,0,1,0,0,0,0,'有機會抽中下列各式物品：
+雪白的高地髦牛座騎 x1、雪白的大長老髦牛座騎 x1、神秘的貓熊座騎 x1
+神秘的貓熊族長座騎 x1、黃色的果凍兔座騎 x1、黃色的豪華果凍兔座騎 x1
+潔白的獨角獸座騎 x1、潔白的傳說獨角獸座騎 x1
+雪白的高地髦牛座騎(限時) x1、雪白的大長老髦牛座騎(限時) x1、神秘的貓熊座騎(限時) x1
+神秘的貓熊族長座騎(限時) x1、黃色的果凍兔座騎(限時) x1、黃色的豪華果凍兔座騎(限時) x1
+潔白的獨角獸座騎(限時) x1、潔白的傳說獨角獸座騎(限時) x1
+魔化煉金黏土 x2、急救藥水 x160、中型急救藥水 x120
+大型急救藥水 x95、強效急救藥水 x80、珍貴急救藥水 x70
+魔力藥水 x160、中型魔力藥水 x120、大型魔力藥水 x95
+強效魔力藥水 x80、珍貴魔力藥水 x70','');
+INSERT INTO itemmall VALUES (43754,3,9,1,2,49,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (43258,3,10,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (42181,3,11,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (42182,3,12,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (44433,3,13,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (44434,3,14,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (44435,3,15,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (42180,3,16,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (42179,3,17,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (42178,3,18,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (42177,3,19,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (44436,3,20,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (44437,3,21,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (44438,3,22,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (44439,3,23,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (44440,3,24,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (42184,3,25,1,2,1,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (43397,3,26,1,2,319,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (43398,3,27,1,2,319,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (43399,3,28,1,2,319,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (43400,3,29,1,2,319,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (43401,3,30,1,2,319,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49198,4,1,1,2,9,0,1,0,0,0,0,'內含下列商品：
+傳送石 x20','');
+INSERT INTO itemmall VALUES (49855,4,2,1,2,15,0,1,0,0,0,0,'1','');
+INSERT INTO itemmall VALUES (49862,4,3,1,2,5,0,1,0,0,0,0,'1','');
+INSERT INTO itemmall VALUES (40572,4,4,1,2,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40114,4,5,1,2,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (41091,4,6,1,2,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (41092,4,7,1,2,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49854,4,8,1,2,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (41089,4,9,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49199,4,10,1,2,9,0,1,0,0,0,0,'內含下列商品：
+簡便的修復鎚子 x10','');
+INSERT INTO itemmall VALUES (40184,4,11,1,2,39,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40380,4,12,1,2,39,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (41493,4,13,1,2,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40186,4,14,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40187,4,15,1,2,39,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40200,4,16,1,2,5,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40201,4,17,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40222,4,18,1,2,109,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40040,5,1,1,2,2,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40042,5,2,1,2,4,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40614,5,3,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40615,5,4,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40312,5,5,1,2,179,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49858,5,6,1,2,6,0,1,0,0,0,0,'內含下列商品：
+珍貴急救藥水 x50','');
+INSERT INTO itemmall VALUES (49859,5,7,1,2,8,0,1,0,0,0,0,'內含下列商品：
+珍貴急救藥水 x50','');
+INSERT INTO itemmall VALUES (49860,5,8,1,2,10,0,1,0,0,0,0,'內含下列商品：
+珍貴急救藥水 x50','');
+INSERT INTO itemmall VALUES (49861,5,9,1,2,12,0,1,0,0,0,0,'內含下列商品：
+珍貴急救藥水 x50','');
+INSERT INTO itemmall VALUES (49207,5,10,1,2,14,0,1,0,0,0,0,'內含下列商品：
+珍貴急救藥水 x50','');
+INSERT INTO itemmall VALUES (49210,5,11,1,2,14,0,1,0,0,0,0,'內含下列商品：
+珍貴魔力藥水 x50','');
+INSERT INTO itemmall VALUES (49283,5,12,1,2,16,0,1,0,0,0,0,'內含下列商品：
+精華急救藥水 x50','');
+INSERT INTO itemmall VALUES (49284,5,13,1,2,16,0,1,0,0,0,0,'內含下列商品：
+精華魔力藥水 x50','');
+INSERT INTO itemmall VALUES (49261,5,14,1,2,15,0,1,0,0,0,0,'內含下列商品：
+經驗的靈修寶石 x2','');
+INSERT INTO itemmall VALUES (49262,5,15,1,2,15,0,1,0,0,0,0,'內含下列商品：
+專精的靈修寶石 x2','');
+INSERT INTO itemmall VALUES (40616,5,16,1,2,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40617,5,17,1,2,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40618,5,18,1,2,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40619,5,19,1,2,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40620,5,20,1,2,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40624,5,21,1,2,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40623,5,22,1,2,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40622,5,23,1,2,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40621,5,24,1,2,15,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49838,5,25,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49839,5,26,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49840,5,27,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49841,5,28,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49842,5,29,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49843,5,30,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49844,5,31,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49845,5,32,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49846,5,33,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49847,5,34,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49848,5,35,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49849,5,36,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49850,5,37,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49851,5,38,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49852,5,39,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49853,5,40,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40509,6,1,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40510,6,2,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30847,6,3,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30848,6,4,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30849,6,5,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30850,6,6,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30851,6,7,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30852,6,8,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30853,6,9,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30854,6,10,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30855,6,11,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30856,6,12,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30857,6,13,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (30858,6,14,1,2,9,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (35692,6,15,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (35693,6,16,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (35694,6,17,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (35695,6,18,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (35696,6,19,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (35697,6,20,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (38808,6,21,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (38809,6,22,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (38810,6,23,1,2,19,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (39234,6,24,1,2,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (39235,6,25,1,2,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (39236,6,26,1,2,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (39377,6,27,1,2,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (39378,6,28,1,2,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (39379,6,29,1,2,29,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40401,7,1,1,2,89,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40322,7,2,1,2,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40100,7,3,1,2,79,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40101,7,4,1,2,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40102,7,5,1,2,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40103,7,6,1,2,79,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40116,7,7,1,2,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40117,7,8,1,2,79,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40119,7,9,1,2,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40120,7,10,1,2,79,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40239,7,11,1,2,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40240,7,12,1,2,79,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40243,7,13,1,2,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40439,7,14,1,2,69,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40138,7,15,1,2,199,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40140,7,16,1,2,149,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40141,7,17,1,2,149,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40349,7,18,1,2,129,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (49043,7,19,1,2,299,0,1,0,0,0,0,'內含下列商品：
+破壞鋼刃精靈盔 x1
+破壞鋼刃精靈衣 x1','');
+INSERT INTO itemmall VALUES (49044,7,20,1,2,299,0,1,0,0,0,0,'內含下列商品：
+砲擊者精靈盔 x1
+砲擊者精靈衣 x1','');
+INSERT INTO itemmall VALUES (49045,7,21,1,2,299,0,1,0,0,0,0,'內含下列商品：
+狙擊領域精靈帽 x1
+狙擊領域精靈衣 x1','');
+INSERT INTO itemmall VALUES (49046,7,22,1,2,299,0,1,0,0,0,0,'內含下列商品：
+曙光女神精靈環 x1
+曙光女神精靈衣 x1','');
+INSERT INTO itemmall VALUES (49047,7,23,1,2,299,0,1,0,0,0,0,'內含下列商品：
+聖靈精靈之冠 x1 
+聖靈精靈之衣 x1','');
+INSERT INTO itemmall VALUES (49048,7,24,1,2,299,0,1,0,0,0,0,'內含下列商品：
+空間穿梭者精靈頭飾 x1
+空間穿梭者精靈衣 x1','');
+INSERT INTO itemmall VALUES (49049,7,25,1,2,299,0,1,0,0,0,0,'內含下列商品：
+幽魂精靈頭飾 x1
+幽魂精靈衣 x1','');
+INSERT INTO itemmall VALUES (49172,8,1,1,2,399,0,1,0,0,0,0,'內含下列商品：
+統御軍帽 x1
+帥氣號令軍裝 x1','');
+INSERT INTO itemmall VALUES (49173,8,2,1,2,399,0,1,0,0,0,0,'內含下列商品：
+統御軍帽 x1
+性感統馭軍裝 x1','');
+INSERT INTO itemmall VALUES (40578,8,3,1,2,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40465,8,4,1,2,349,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40696,8,5,1,2,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40697,8,6,1,2,349,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40466,8,7,1,2,249,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40692,8,8,1,2,299,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40327,8,9,1,2,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40225,8,10,1,2,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40227,8,11,1,2,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40229,8,12,1,2,99,0,1,0,0,0,0,'','');
+INSERT INTO itemmall VALUES (40231,8,13,1,2,99,0,1,0,0,0,0,'','');

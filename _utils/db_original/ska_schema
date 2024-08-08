@@ -1,0 +1,642 @@
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+--
+-- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: postgres
+--
+
+CREATE PROCEDURAL LANGUAGE plpgsql;
+
+
+ALTER PROCEDURAL LANGUAGE plpgsql OWNER TO postgres;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: accounts; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE accounts (
+    id integer NOT NULL,
+    username character varying(32),
+    password character varying(32),
+    realname character varying(32),
+    worldserver integer DEFAULT 0,
+    state integer DEFAULT 0
+);
+
+
+ALTER TABLE public.accounts OWNER TO postgres;
+
+--
+-- Name: character_number; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE character_number (
+    account_id integer NOT NULL,
+    world_id integer NOT NULL,
+    "character" integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.character_number OWNER TO postgres;
+
+--
+-- Name: configuration; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE configuration (
+    schema_version integer NOT NULL,
+    login_version character varying(32)
+);
+
+
+ALTER TABLE public.configuration OWNER TO postgres;
+
+--
+-- Name: crashlog; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE crashlog (
+    host character(20) NOT NULL,
+    process character(30),
+    eth0 character varying(15) NOT NULL,
+    eth1 character varying(15),
+    regdate timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public.crashlog OWNER TO postgres;
+
+--
+-- Name: crashmonitor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE crashmonitor (
+    host character varying(20) NOT NULL,
+    daemon character varying(100) NOT NULL,
+    process character varying(100) NOT NULL,
+    status smallint DEFAULT 0,
+    eth0 character varying(15) NOT NULL,
+    eth1 character varying(15),
+    regdate timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.crashmonitor OWNER TO postgres;
+
+--
+-- Name: exchange_list; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE exchange_list (
+    id integer NOT NULL,
+    description character varying(50),
+    amount integer DEFAULT 0
+);
+
+
+ALTER TABLE public.exchange_list OWNER TO postgres;
+
+--
+-- Name: exchange_pin; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE exchange_pin (
+    pin character varying(16) NOT NULL,
+    password character varying(16) NOT NULL,
+    rule_id integer DEFAULT (-1),
+    state character varying(16) DEFAULT 'create'::character varying,
+    zoneserver_id integer DEFAULT (-1),
+    account_id integer DEFAULT (-1),
+    character_id integer DEFAULT (-1),
+    log_time timestamp without time zone,
+    pin_set integer DEFAULT (-1)
+);
+
+
+ALTER TABLE public.exchange_pin OWNER TO postgres;
+
+--
+-- Name: exchange_rule; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE exchange_rule (
+    id integer NOT NULL,
+    item_id integer DEFAULT (-1),
+    item_num integer DEFAULT 0,
+    rate integer DEFAULT 0,
+    set integer
+);
+
+
+ALTER TABLE public.exchange_rule OWNER TO postgres;
+
+--
+-- Name: fortune_bag; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE fortune_bag (
+    id integer NOT NULL,
+    sequence smallint NOT NULL,
+    set integer NOT NULL,
+    item_id integer NOT NULL,
+    item_num integer NOT NULL,
+    probability real NOT NULL,
+    note text DEFAULT ''::text
+);
+
+
+ALTER TABLE public.fortune_bag OWNER TO postgres;
+
+--
+-- Name: item_receipt; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE item_receipt (
+    id integer NOT NULL,
+    purchase_time timestamp without time zone NOT NULL,
+    receieved_time timestamp without time zone DEFAULT now(),
+    account_name character varying(20) DEFAULT ''::character varying,
+    item_id integer DEFAULT (-1) NOT NULL,
+    item_quantity integer DEFAULT (-1) NOT NULL,
+    world_id integer DEFAULT (-1),
+    player_name character varying(32) DEFAULT ''::character varying,
+    unique_id integer DEFAULT (-1),
+    create_time integer DEFAULT (-1),
+    point integer
+);
+
+
+ALTER TABLE public.item_receipt OWNER TO postgres;
+
+--
+-- Name: item_receivable; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE item_receivable (
+    id integer NOT NULL,
+    state smallint DEFAULT 1 NOT NULL,
+    purchase_time timestamp without time zone DEFAULT now(),
+    receivable_time timestamp without time zone DEFAULT now(),
+    account_name character varying(20) DEFAULT ''::character varying,
+    item_id integer DEFAULT (-1) NOT NULL,
+    item_quantity smallint DEFAULT (-1) NOT NULL,
+    world_id integer DEFAULT (-1),
+    player_name character varying(32) DEFAULT ''::character varying,
+    point integer
+);
+
+
+ALTER TABLE public.item_receivable OWNER TO postgres;
+
+--
+-- Name: itemmall; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE itemmall (
+    item_id integer NOT NULL,
+    item_group character varying(32) DEFAULT ''::character varying NOT NULL,
+    item_index integer NOT NULL,
+    item_num integer NOT NULL,
+    point integer NOT NULL,
+    sell integer NOT NULL,
+    note text DEFAULT ''::text
+);
+
+
+ALTER TABLE public.itemmall OWNER TO postgres;
+
+--
+-- Name: worlds; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE worlds (
+    id integer DEFAULT nextval(('"worlds_id_seq"'::text)::regclass) NOT NULL,
+    name character varying(16),
+    ip character varying(15),
+    port integer DEFAULT 5200,
+    online_user integer DEFAULT 0,
+    maxnum_user integer DEFAULT 1000 NOT NULL,
+    state integer DEFAULT 0,
+    version character varying(32),
+    show_order integer DEFAULT 0
+);
+
+
+ALTER TABLE public.worlds OWNER TO postgres;
+
+--
+-- Name: billing_login(character, character); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION billing_login(character, character) RETURNS boolean
+    AS $_$
+declare
+  i_account alias for $1;
+  i_password alias for $2;
+  user_rec RECORD;
+begin
+  select into user_rec * from accounts where username=i_account;-- and password=i_password;
+  if user_rec.username is not null then
+    return true;
+  end if;
+  return false;
+end
+$_$
+    LANGUAGE plpgsql;
+
+
+ALTER FUNCTION public.billing_login(character, character) OWNER TO postgres;
+
+--
+-- Name: get_account(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION get_account(integer) RETURNS character
+    AS $_$
+declare 
+	account_id alias for $1;
+	user_rec record;
+begin 
+	select into user_rec username from accounts where id=account_id;
+	if user_rec.username is not null then
+		return user_rec.username;
+	end if;
+		return null;
+end
+
+$_$
+    LANGUAGE plpgsql;
+
+
+ALTER FUNCTION public.get_account(integer) OWNER TO postgres;
+
+--
+-- Name: get_accountid(character); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION get_accountid(character) RETURNS integer
+    AS $_$
+declare 
+  i_account alias for $1;
+  user_rec RECORD;
+begin
+  select into user_rec id from accounts where username=i_account;
+  if user_rec.id is not null then
+	return user_rec.id;
+  end if;
+	return 0;
+end
+$_$
+    LANGUAGE plpgsql;
+
+
+ALTER FUNCTION public.get_accountid(character) OWNER TO postgres;
+
+--
+-- Name: plpgsql_call_handler(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION plpgsql_call_handler() RETURNS language_handler
+    AS '$libdir/plpgsql', 'plpgsql_call_handler'
+    LANGUAGE c;
+
+
+ALTER FUNCTION public.plpgsql_call_handler() OWNER TO postgres;
+
+--
+-- Name: item_receivable_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE item_receivable_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.item_receivable_id_seq OWNER TO postgres;
+
+--
+-- Name: item_receivable_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE item_receivable_id_seq OWNED BY item_receivable.id;
+
+
+--
+-- Name: worlds_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE worlds_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.worlds_id_seq OWNER TO postgres;
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE item_receivable ALTER COLUMN id SET DEFAULT nextval('item_receivable_id_seq'::regclass);
+
+
+--
+-- Name: accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY accounts
+    ADD CONSTRAINT accounts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: character_number_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY character_number
+    ADD CONSTRAINT character_number_pkey PRIMARY KEY (account_id, world_id);
+
+
+--
+-- Name: configuration_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY configuration
+    ADD CONSTRAINT configuration_pkey PRIMARY KEY (schema_version);
+
+
+--
+-- Name: crashlog_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY crashlog
+    ADD CONSTRAINT crashlog_pkey PRIMARY KEY (host, eth0, regdate);
+
+
+--
+-- Name: crashmonitor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY crashmonitor
+    ADD CONSTRAINT crashmonitor_pkey PRIMARY KEY (host, daemon, eth0);
+
+
+--
+-- Name: exchange_pin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY exchange_pin
+    ADD CONSTRAINT exchange_pin_pkey PRIMARY KEY (pin);
+
+
+--
+-- Name: id; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY exchange_list
+    ADD CONSTRAINT id PRIMARY KEY (id);
+
+
+--
+-- Name: item_receipt_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY item_receipt
+    ADD CONSTRAINT item_receipt_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: item_receivable_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY item_receivable
+    ADD CONSTRAINT item_receivable_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: itemmall_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY itemmall
+    ADD CONSTRAINT itemmall_pkey PRIMARY KEY (item_id, item_group);
+
+
+--
+-- Name: worlds_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY worlds
+    ADD CONSTRAINT worlds_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: account_username_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX account_username_index ON accounts USING btree (username);
+
+
+--
+-- Name: item_receivable_account_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX item_receivable_account_index ON item_receivable USING btree (account_name);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- Name: accounts; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE accounts FROM PUBLIC;
+REVOKE ALL ON TABLE accounts FROM postgres;
+GRANT ALL ON TABLE accounts TO postgres;
+GRANT ALL ON TABLE accounts TO spiritking;
+GRANT SELECT,TRIGGER ON TABLE accounts TO webtool;
+
+
+--
+-- Name: character_number; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE character_number FROM PUBLIC;
+REVOKE ALL ON TABLE character_number FROM postgres;
+GRANT ALL ON TABLE character_number TO postgres;
+GRANT ALL ON TABLE character_number TO spiritking;
+
+
+--
+-- Name: configuration; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE configuration FROM PUBLIC;
+REVOKE ALL ON TABLE configuration FROM postgres;
+GRANT ALL ON TABLE configuration TO postgres;
+GRANT ALL ON TABLE configuration TO spiritking;
+
+
+--
+-- Name: crashlog; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE crashlog FROM PUBLIC;
+REVOKE ALL ON TABLE crashlog FROM postgres;
+GRANT ALL ON TABLE crashlog TO postgres;
+GRANT ALL ON TABLE crashlog TO spiritking;
+
+
+--
+-- Name: crashmonitor; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE crashmonitor FROM PUBLIC;
+REVOKE ALL ON TABLE crashmonitor FROM postgres;
+GRANT ALL ON TABLE crashmonitor TO postgres;
+GRANT ALL ON TABLE crashmonitor TO spiritking;
+
+
+--
+-- Name: exchange_list; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE exchange_list FROM PUBLIC;
+REVOKE ALL ON TABLE exchange_list FROM postgres;
+GRANT ALL ON TABLE exchange_list TO postgres;
+GRANT ALL ON TABLE exchange_list TO spiritking;
+
+
+--
+-- Name: exchange_pin; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE exchange_pin FROM PUBLIC;
+REVOKE ALL ON TABLE exchange_pin FROM postgres;
+GRANT ALL ON TABLE exchange_pin TO postgres;
+GRANT ALL ON TABLE exchange_pin TO spiritking;
+
+
+--
+-- Name: exchange_rule; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE exchange_rule FROM PUBLIC;
+REVOKE ALL ON TABLE exchange_rule FROM postgres;
+GRANT ALL ON TABLE exchange_rule TO postgres;
+GRANT ALL ON TABLE exchange_rule TO spiritking;
+
+
+--
+-- Name: fortune_bag; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE fortune_bag FROM PUBLIC;
+REVOKE ALL ON TABLE fortune_bag FROM postgres;
+GRANT ALL ON TABLE fortune_bag TO postgres;
+GRANT ALL ON TABLE fortune_bag TO spiritking;
+
+
+--
+-- Name: item_receipt; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE item_receipt FROM PUBLIC;
+REVOKE ALL ON TABLE item_receipt FROM postgres;
+GRANT ALL ON TABLE item_receipt TO postgres;
+GRANT ALL ON TABLE item_receipt TO spiritking;
+
+
+--
+-- Name: item_receivable; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE item_receivable FROM PUBLIC;
+REVOKE ALL ON TABLE item_receivable FROM postgres;
+GRANT ALL ON TABLE item_receivable TO postgres;
+GRANT ALL ON TABLE item_receivable TO spiritking;
+GRANT ALL ON TABLE item_receivable TO webtool;
+
+
+--
+-- Name: itemmall; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE itemmall FROM PUBLIC;
+REVOKE ALL ON TABLE itemmall FROM postgres;
+GRANT ALL ON TABLE itemmall TO postgres;
+GRANT ALL ON TABLE itemmall TO spiritking;
+
+
+--
+-- Name: worlds; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE worlds FROM PUBLIC;
+REVOKE ALL ON TABLE worlds FROM postgres;
+GRANT ALL ON TABLE worlds TO postgres;
+GRANT ALL ON TABLE worlds TO spiritking;
+
+
+--
+-- Name: get_accountid(character); Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON FUNCTION get_accountid(character) FROM PUBLIC;
+REVOKE ALL ON FUNCTION get_accountid(character) FROM postgres;
+GRANT ALL ON FUNCTION get_accountid(character) TO postgres;
+
+
+--
+-- Name: item_receivable_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE item_receivable_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE item_receivable_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE item_receivable_id_seq TO postgres;
+GRANT ALL ON SEQUENCE item_receivable_id_seq TO spiritking;
+GRANT UPDATE ON SEQUENCE item_receivable_id_seq TO webtool;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- Data for Name: configuration; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY configuration (schema_version, login_version) FROM stdin;
+0812300000	Unknown_Version(Login)
+\.
+
+--
+-- Data for Name: worlds; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY worlds (id, name, ip, port, online_user, maxnum_user, state, version) FROM stdin;
+10	Unstable Elf Server	192.168.1.53	5555	0	2000	0	Unknown_Version
+20	Elf Server	192.168.1.53	5565	0	2000	0	Unknown_Version
+\.

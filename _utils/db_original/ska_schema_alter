@@ -1,0 +1,136 @@
+version 0512162000
+ALTER TABLE "configuration" ADD "login_version" character varying(32);
+UPDATE "configuration" SET "login_version" = '1-6-7-VIP (Login)';
+ALTER TABLE "worlds" ADD "version" character varying(32);
+UPDATE "worlds" SET "version" = 'Unknown_Version';
+
+version 0512292100
+DROP INDEX "character_number_pkey";
+CREATE INDEX character_number_account_id ON character_number USING btree ("account_id");
+
+version 0608171500
+CREATE UNIQUE INDEX accounts_username_index ON accounts USING btree (username);
+
+version 0809170937
+DROP TABLE "itemmall";
+CREATE TABLE "itemmall" ("item_id" integer NOT NULL,"item_group" integer NOT NULL,"item_index" integer NOT NULL,"item_num" integer NOT NULL,"point" integer NOT NULL,"sell" integer NOT NULL,"note" text DEFAULT '');
+REVOKE ALL on "itemmall" from PUBLIC;
+GRANT ALL on "itemmall" to "postgres";
+GRANT ALL on "itemmall" to "spiritking";
+
+DROP TABLE "fortune_bag";
+CREATE TABLE "fortune_bag" ("id" integer NOT NULL,"sequence" smallint NOT NULL,"set" integer NOT NULL,"item_id" integer NOT NULL,"item_num" integer NOT NULL,"probability" integer NOT NULL,"note" text DEFAULT '');
+REVOKE ALL on "fortune_bag" from PUBLIC;
+GRANT ALL on "fortune_bag" to "postgres";
+GRANT ALL on "fortune_bag" to "spiritking";
+
+version 0811200956
+ALTER TABLE exchange_pin ADD pin_set integer;
+ALTER TABLE "exchange_pin" ALTER "pin_set" SET DEFAULT -1;
+update exchange_pin set pin_set = -1;
+
+version 0812101723
+ALTER TABLE worlds ADD show_order integer;
+ALTER TABLE "worlds" ALTER "show_order" SET DEFAULT 0;
+update worlds set show_order = 0;
+
+version 0904161600
+ALTER TABLE accounts ADD health_online_time integer;
+ALTER TABLE accounts ALTER health_online_time SET DEFAULT 0;
+UPDATE accounts SET health_online_time = 0;
+ALTER TABLE accounts ADD health_offline_time integer;
+ALTER TABLE accounts ALTER health_offline_time SET DEFAULT 0;
+UPDATE accounts SET health_offline_time = 0;
+ALTER TABLE accounts ADD last_save_health_time integer;
+ALTER TABLE accounts ALTER last_save_health_time SET DEFAULT 0;
+UPDATE accounts SET last_save_health_time = 0;
+
+version 0910081400
+CREATE TABLE gm_tool_accounts (id integer NOT NULL,account_name character varying(32),password character varying(32),privilege integer DEFAULT 0);
+ALTER TABLE ONLY gm_tool_accounts ADD CONSTRAINT gm_tool_accounts_pkey PRIMARY KEY (id);
+CREATE INDEX gm_tool_account_name_index ON gm_tool_accounts USING btree (account_name);
+REVOKE ALL ON TABLE gm_tool_accounts FROM PUBLIC;
+REVOKE ALL ON TABLE gm_tool_accounts FROM postgres;
+GRANT ALL ON TABLE gm_tool_accounts TO postgres;
+GRANT ALL ON TABLE gm_tool_accounts TO spiritking;
+
+version 0911121120
+ALTER TABLE item_receivable ADD amount integer;
+ALTER TABLE item_receivable ALTER amount SET DEFAULT 1;
+ALTER TABLE item_receivable ADD mail_name character varying (32);
+ALTER TABLE item_receivable ALTER mail_name SET DEFAULT '';
+
+ALTER TABLE item_receipt ADD amount integer;
+ALTER TABLE item_receipt ALTER amount SET DEFAULT 1;
+ALTER TABLE item_receipt ADD mail_name character varying (32);
+ALTER TABLE item_receipt ALTER mail_name SET DEFAULT '';
+
+UPDATE item_receivable SET amount = 1, mail_name = '';
+UPDATE item_receipt SET amount = 1, mail_name = '';
+
+version 0911251630
+DROP TABLE gm_tool_log;
+CREATE TABLE gm_tool_log (gm_id integer NOT NULL,cmd_type character varying(32),cmd_detail character varying(32),reason character varying(32),time timestamp with time zone);
+REVOKE ALL ON TABLE gm_tool_log FROM PUBLIC;
+REVOKE ALL ON TABLE gm_tool_log FROM postgres;
+GRANT ALL ON TABLE gm_tool_log TO postgres;
+GRANT ALL ON TABLE gm_tool_log TO spiritking;
+
+version 0911301120
+CREATE INDEX username_index ON accounts USING btree (username);
+
+version 0912101530
+DROP INDEX item_receivable_account_index;
+CREATE INDEX item_receivable_account_index ON item_receivable (account_name);
+Drop index item_receipt_account_index;
+CREATE INDEX item_receipt_account_index ON item_receipt (account_name);
+
+version 0912281550
+DROP TABLE gm_tool_log_old;
+ALTER TABLE gm_tool_log RENAME TO gm_tool_log_old;
+CREATE TABLE gm_tool_log (gm_id integer NOT NULL,cmd_type character varying(32),cmd_detail character varying(256),reason character varying(256),time timestamp with time zone);
+REVOKE ALL ON TABLE gm_tool_log FROM PUBLIC;
+REVOKE ALL ON TABLE gm_tool_log FROM postgres;
+GRANT ALL ON TABLE gm_tool_log TO postgres;
+GRANT ALL ON TABLE gm_tool_log TO spiritking;
+
+version 1001211900
+ALTER TABLE accounts ADD charpassword character varying(32);
+ALTER TABLE accounts ALTER charpassword SET DEFAULT '';
+UPDATE accounts SET charpassword='';
+
+version 1003122000
+ALTER TABLE accounts ADD use_charpassword bool DEFAULT true;
+UPDATE accounts SET use_charpassword=true;
+
+version 1006031640
+ALTER TABLE item_receipt ALTER COLUMN account_name TYPE character varying(32);
+ALTER TABLE item_receivable ALTER COLUMN account_name TYPE character varying(32);
+
+version 1104121700
+ALTER TABLE accounts ADD char_max_num integer DEFAULT 3;
+
+version 1201161625
+DROP TABLE "itemmall_limit_account";
+CREATE TABLE "itemmall_limit_account" ("account_id" integer NOT NULL,"item_id" integer NOT NULL,"buy_amount" integer NOT NULL, CONSTRAINT itemmall_account_num_limit_key PRIMARY KEY (account_id, item_id));
+CREATE INDEX itemmall_limit_account_index ON itemmall_limit_account (account_id);
+REVOKE ALL on "itemmall_limit_account" from PUBLIC;
+GRANT ALL on "itemmall_limit_account" to "postgres";
+GRANT ALL on "itemmall_limit_account" to "spiritking";
+
+
+version 1406171042
+ALTER TABLE item_receivable ADD money_type integer DEFAULT 0;
+
+version 1807271813 
+ALTER TABLE character_number ADD first_ch_create_time timestamp with time zone;   
+
+version 1808161532 
+CREATE TABLE "itemmall_new_account_amount_limit" ("account_id" integer NOT NULL,"item_id" integer NOT NULL,"buy_amount" integer NOT NULL, CONSTRAINT itemmall_new_account_amount_limit_key PRIMARY KEY (account_id, item_id));
+CREATE INDEX itemmall_new_account_amount_limit_index ON itemmall_new_account_amount_limit (account_id);
+REVOKE ALL on "itemmall_new_account_amount_limit" from PUBLIC;
+GRANT ALL on "itemmall_new_account_amount_limit" to "postgres";
+GRANT ALL on "itemmall_new_account_amount_limit" to "spiritking";
+
+version 1812201540
+ALTER TABLE accounts ADD win_os_bit integer DEFAULT 0;
